@@ -479,7 +479,7 @@ def build_html(companies):
       </div>
       <div class="tbl-wrap"><table>
         <colgroup><col style="width:36px"><col style="width:260px"><col style="width:90px"><col style="width:55px"><col style="width:85px"><col style="width:115px"><col style="width:90px"><col style="width:75px"><col style="width:95px"><col style="width:90px"></colgroup>
-        <thead><tr><th class="rn">#</th><th>Bygg</th><th class="r">Brutto kvm</th><th class="c">MA%</th><th class="r">Møblert kvm</th><th class="r">Møbelverdi</th><th class="c">Møbelalder</th><th class="c">Møbelår</th><th class="c">Status</th><th>By</th></tr></thead>
+        <thead><tr><th class="rn">#</th><th>Bygg</th><th class="r">Brutto kvm</th><th class="c">MA%</th><th class="r">Møblert kvm</th><th class="r">Møbelverdi</th><th class="c">Møbelalder</th><th class="c">Byggeår</th><th class="c">Status</th><th>By</th></tr></thead>
         <tbody id="tbody-{cid}"></tbody>
       </table></div>
     </div>''')
