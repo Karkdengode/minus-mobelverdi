@@ -277,9 +277,10 @@ def appliser_signaler(bygg_liste, signaler):
 
             if (adresse_match or selskap_match) and yr:
                 if not bygg.get("yr") or yr > bygg["yr"]:
-                    bygg["yr"] = yr
-                    bygg["s"]  = _ny_status(yr)
-                    oppdatert += 1
+                    bygg["yr"]  = yr
+                    bygg["s"]   = _ny_status(yr)
+                    bygg["src"] = sig.get("url", "")
+                    oppdatert  += 1
 
     return bygg_liste, oppdatert
 

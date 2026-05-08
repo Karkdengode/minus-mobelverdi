@@ -390,7 +390,8 @@ def to_js(arr):
     for r in arr:
         yr = r["yr"] if r["yr"] else "null"
         n = r["n"].replace("'", "\\'")
-        lines.append(f"  {{n:'{n}',by:'{r['by']}',kvm:{r['kvm']},ma:{r['ma']},yr:{yr},s:'{r['s']}'}}")
+        src = (r.get("src") or "").replace("'", "\\'")
+        lines.append(f"  {{n:'{n}',by:'{r['by']}',kvm:{r['kvm']},ma:{r['ma']},yr:{yr},s:'{r['s']}',src:'{src}'}}")
     return "[\n" + ",\n".join(lines) + "\n]"
 
 
@@ -630,12 +631,16 @@ function renderTable(id, data) {{
     const v = Math.round(maKvm * RATE);
     total += v;
     const alder = r.yr ? ({THIS_YEAR}-r.yr)+' år' : '—';
+    const yrCell = r.yr
+      ? (r.src ? `<a href="${{r.src}}" target="_blank" rel="noopener" title="Kilde: ${{r.src}}" style="font-family:'IBM Plex Mono',monospace;color:var(--accent);text-decoration:none;border-bottom:1px dashed var(--accent)">${{r.yr}} ↗</a>`
+               : `<span style="font-family:'IBM Plex Mono',monospace">${{r.yr}}</span>`)
+      : '—';
     html += `<tr class="row-${{r.s}}" data-s="${{r.s}}" data-by="${{r.by.toLowerCase()}}">
       <td class="rn">${{i+1}}</td><td title="${{r.n}}">${{r.n}}</td>
       <td class="r">${{fmtK(r.kvm)}}</td><td class="c">${{r.ma}}%</td>
       <td class="r">${{fmtK(maKvm)}}</td><td class="r">${{fmtN(v)}}</td>
       <td class="c" style="color:#999;font-size:11px;font-style:italic">${{alder}}</td>
-      <td class="c" style="font-family:'IBM Plex Mono',monospace">${{r.yr||'—'}}</td>
+      <td class="c">${{yrCell}}</td>
       <td class="c">${{badge[r.s]||''}}</td><td>${{r.by}}</td></tr>`;
   }});
   html += `<tr class="row-total"><td></td><td><b>TOTAL</b></td><td class="r"></td><td></td><td class="r"></td><td class="r"><b>${{fmtN(total)}}</b></td><td colspan="4"></td></tr>`;
