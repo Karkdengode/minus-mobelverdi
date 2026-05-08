@@ -447,7 +447,12 @@ function renderTable(id, data) {
     const maKvm = Math.round(r.kvm * r.ma / 100);
     const v = Math.round(maKvm * RATE);
     total += v;
-    const alder = r.yr ? (2026-r.yr)+' år?' : '—';
+    const age = r.yr ? 2026 - r.yr : null;
+    const alder = (age !== null && age <= 10) ? age + ' år' : '—';
+    const yrCell = r.yr
+      ? (r.src ? `<a href="${r.src}" target="_blank" rel="noopener" title="Kilde: ${r.src}" style="font-family:'IBM Plex Mono',monospace;color:var(--accent);text-decoration:none;border-bottom:1px dashed var(--accent)">${r.yr} ↗</a>`
+               : `<span style="font-family:'IBM Plex Mono',monospace">${r.yr}</span>`)
+      : '—';
     html += `<tr class="row-${r.s}" data-s="${r.s}" data-by="${r.by.toLowerCase()}">
       <td class="rn">${i+1}</td>
       <td title="${r.n}">${r.n}</td>
@@ -456,7 +461,7 @@ function renderTable(id, data) {
       <td class="r">${fmtK(maKvm)}</td>
       <td class="r">${fmtN(v)}</td>
       <td class="c" style="color:#999;font-size:11px;font-style:italic">${alder}</td>
-      <td class="c" style="font-family:'IBM Plex Mono',monospace">${r.yr||'—'}</td>
+      <td class="c">${yrCell}</td>
       <td class="c">${badge[r.s]||''}</td>
       <td>${r.by}</td>
     </tr>`;
