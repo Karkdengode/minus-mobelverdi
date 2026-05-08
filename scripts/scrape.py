@@ -390,8 +390,9 @@ def to_js(arr):
     for r in arr:
         yr = r["yr"] if r["yr"] else "null"
         n = r["n"].replace("'", "\\'")
-        src = (r.get("src") or "").replace("'", "\\'")
-        lines.append(f"  {{n:'{n}',by:'{r['by']}',kvm:{r['kvm']},ma:{r['ma']},yr:{yr},s:'{r['s']}',src:'{src}'}}")
+        src   = (r.get("src")   or "").replace("'", "\\'")
+        kilde = (r.get("kilde") or "").replace("'", "\\'")
+        lines.append(f"  {{n:'{n}',by:'{r['by']}',kvm:{r['kvm']},ma:{r['ma']},yr:{yr},s:'{r['s']}',src:'{src}',kilde:'{kilde}'}}")
     return "[\n" + ",\n".join(lines) + "\n]"
 
 
@@ -631,10 +632,12 @@ function renderTable(id, data) {{
     const v = Math.round(maKvm * RATE);
     total += v;
     const age = r.yr ? {THIS_YEAR} - r.yr : null;
-    const alder = (age !== null && age <= 10) ? age + ' år' : '—';
+    const alderTall = (age !== null && age <= 10) ? age + ' år' : '—';
+    const alder = (r.kilde && age !== null && age <= 10)
+      ? `${{alderTall}} <a href="${{r.src}}" target="_blank" rel="noopener" title="Kilde: ${{r.kilde}}" style="font-size:9.5px;color:var(--accent);text-decoration:none;opacity:0.7">via ${{r.kilde}} ↗</a>`
+      : alderTall;
     const yrCell = r.yr
-      ? (r.src ? `<a href="${{r.src}}" target="_blank" rel="noopener" title="Kilde: ${{r.src}}" style="font-family:'IBM Plex Mono',monospace;color:var(--accent);text-decoration:none;border-bottom:1px dashed var(--accent)">${{r.yr}} ↗</a>`
-               : `<span style="font-family:'IBM Plex Mono',monospace">${{r.yr}}</span>`)
+      ? `<span style="font-family:'IBM Plex Mono',monospace">${{r.yr}}</span>`
       : '—';
     html += `<tr class="row-${{r.s}}" data-s="${{r.s}}" data-by="${{r.by.toLowerCase()}}">
       <td class="rn">${{i+1}}</td><td title="${{r.n}}">${{r.n}}</td>
