@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minus — Møbelverdi</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f2f1ed;
+  --sheet: #ffffff;
+  --ink: #1a1a1a;
+  --ink-2: #555;
+  --ink-3: #999;
+  --border: #d8d5cc;
+  --accent: #1c3d5a;
+  --now-bg: #fff0ee; --now: #b83020;
+  --soon-bg: #fffbec; --soon: #8a6000;
+  --ok-bg: #edfaf3; --ok: #1a6e3c;
+  --ingen-bg: #eef5ff; --ingen: #1a4a8a;
+  --tab-h: 32px;
+  --header-h: 44px;
+  --row-h: 28px;
+}
+body {
+  font-family: 'IBM Plex Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 12.5px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.topbar {
+  height: var(--header-h);
+  background: var(--accent);
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  gap: 24px;
+  flex-shrink: 0;
+}
+.topbar-logo {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.topbar-kpis { margin-left: auto; display: flex; gap: 32px; }
+.kpi { text-align: right; }
+.kpi-l { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+.kpi-v { font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: white; }
+.kpi-v.gold { color: #dbb84a; }
+.tabbar {
+  display: flex;
+  align-items: flex-end;
+  padding: 8px 14px 0;
+  background: var(--bg);
+  gap: 2px;
+  flex-shrink: 0;
+}
+.tab {
+  height: var(--tab-h);
+  padding: 0 16px;
+  border: 1px solid var(--border);
+  border-bottom: none;
+  background: #e5e2db;
+  color: var(--ink-2);
+  font-size: 12px;
+  cursor: pointer;
+  border-radius: 3px 3px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+  font-family: 'IBM Plex Sans', sans-serif;
+  transition: background 0.1s;
+}
+.tab:hover { background: #eeebe4; }
+.tab.active {
+  background: var(--sheet);
+  color: var(--ink);
+  font-weight: 500;
+  border-bottom: 1px solid var(--sheet);
+  z-index: 2;
+  position: relative;
+}
+.tab-count {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--ink-3);
+  background: rgba(0,0,0,0.07);
+  padding: 0 5px;
+  border-radius: 2px;
+}
+.tab.active .tab-count { background: #eee; }
+.sheet-content {
+  flex: 1;
+  overflow: hidden;
+  background: var(--sheet);
+  border: 1px solid var(--border);
+  margin: 0 14px 14px;
+  display: flex;
+  flex-direction: column;
+}
+.pane { display: none; flex-direction: column; height: 100%; overflow: hidden; }
+.pane.active { display: flex; }
+.toolbar {
+  display: flex;
+  align-items: center;
+  padding: 6px 12px;
+  gap: 6px;
+  border-bottom: 1px solid var(--border);
+  background: #fafaf7;
+  flex-shrink: 0;
+}
+.filter-btn {
+  padding: 2px 9px;
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 2px;
+  font-size: 11px;
+  cursor: pointer;
+  color: var(--ink-2);
+  font-family: 'IBM Plex Sans', sans-serif;
+}
+.filter-btn:hover { background: var(--bg); }
+.filter-btn.on { background: var(--accent); color: white; border-color: var(--accent); }
+.toolbar-sum { margin-left: auto; font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink-2); }
+.toolbar-sum b { color: var(--accent); }
+.tbl-wrap { flex: 1; overflow: auto; }
+table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+thead th {
+  position: sticky; top: 0; z-index: 1;
+  background: #eeece6;
+  border: 1px solid var(--border);
+  padding: 0 10px;
+  height: 26px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--ink-2);
+  text-align: left;
+  white-space: nowrap;
+}
+thead th.r { text-align: right; }
+thead th.c { text-align: center; }
+thead th.rn { width:36px; background:#e8e5de; text-align:center; color:var(--ink-3); }
+tbody td {
+  border: 1px solid #ebe8e0;
+  padding: 0 10px;
+  height: var(--row-h);
+  vertical-align: middle;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+tbody td.rn { width:36px; background:#f5f3ef; text-align:center; font-family:'IBM Plex Mono',monospace; font-size:10px; color:var(--ink-3); border-right:1px solid var(--border); }
+tbody td.r { text-align: right; font-family: 'IBM Plex Mono', monospace; }
+tbody td.c { text-align: center; }
+tbody tr:hover td { filter: brightness(0.97); }
+tr.row-nå td { background: var(--now-bg); }
+tr.row-snart td { background: var(--soon-bg); }
+tr.row-ok td { background: var(--ok-bg); }
+tr.row-ingen td { background: var(--ingen-bg); }
+tr.row-total td { background: #eeece6 !important; font-weight: 600; border-top: 2px solid #bbb; }
+tr.hidden { display: none; }
+.badge { display:inline-block; font-size:9.5px; font-weight:600; padding:1px 6px; border-radius:2px; }
+.b-nå    { background:#fdd; color:var(--now); }
+.b-snart { background:#fef3cc; color:var(--soon); }
+.b-ok    { background:#d4edda; color:var(--ok); }
+.b-ingen { background:#d6eaf8; color:var(--ingen); }
+.sum-wrap { padding: 20px; flex: 1; overflow: auto; }
+.sum-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border:1px solid var(--border); }
+.s-card { background:white; padding:18px 20px; }
+.s-card.big { grid-column:span 2; background:var(--accent); }
+.s-label { font-size:9px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-3); margin-bottom:6px; }
+.s-card.big .s-label { color:rgba(255,255,255,0.45); }
+.s-value { font-family:'IBM Plex Mono',monospace; font-size:26px; font-weight:500; color:var(--accent); }
+.s-card.big .s-value { color:#dbb84a; font-size:30px; }
+.s-sub { font-size:11px; color:var(--ink-3); margin-top:3px; }
+.s-card.big .s-sub { color:rgba(255,255,255,0.35); }
+.sum-table { width:100%; border-collapse:collapse; border:1px solid var(--border); margin-top:20px; }
+.sum-table th { background:#eeece6; border:1px solid var(--border); padding:6px 12px; font-size:10.5px; color:var(--ink-2); text-align:left; }
+.sum-table th.r { text-align:right; }
+.sum-table td { border:1px solid var(--border); padding:7px 12px; font-size:12px; }
+.sum-table td.r { text-align:right; font-family:'IBM Plex Mono',monospace; }
+.sum-table tr:last-child td { font-weight:600; background:#eeece6; border-top:2px solid #bbb; }
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-logo">Minus</div>
+  <div class="topbar-kpis">
+    <div class="kpi"><div class="kpi-l">Brutto estimat</div><div class="kpi-v gold">NOK 779 M</div></div>
+    <div class="kpi"><div class="kpi-l">Konservativt (80%)</div><div class="kpi-v">NOK 623 M</div></div>
+    <div class="kpi"><div class="kpi-l">Selskaper</div><div class="kpi-v">4</div></div>
+    <div class="kpi"><div class="kpi-l">Bygg</div><div class="kpi-v">160</div></div>
+  </div>
+</div>
+<div style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+  <div class="tabbar">
+    <div class="tab active" onclick="switchTab('sammendrag',this)">Sammendrag</div>
+    <div class="tab" onclick="switchTab('nordea',this)">Nordea Liv Eiendom <span class="tab-count">21</span></div>
+    <div class="tab" onclick="switchTab('klp',this)">KLP Eiendom <span class="tab-count">50</span></div>
+    <div class="tab" onclick="switchTab('are',this)">Aspelin Reitan Eiendom <span class="tab-count">14</span></div>
+    <div class="tab" onclick="switchTab('entra',this)">Entra <span class="tab-count">75</span></div>
+  </div>
+  <div class="sheet-content">
+
+    <div class="pane active" id="pane-sammendrag">
+      <div class="sum-wrap">
+        <div class="sum-grid">
+          <div class="s-card big">
+            <div class="s-label">Konservativt estimat (80%)</div>
+            <div class="s-value">NOK 623 M</div>
+            <div class="s-sub">4 selskaper · 160 bygg</div>
+          </div>
+          <div class="s-card">
+            <div class="s-label">Nordea Liv Eiendom</div>
+            <div class="s-value" style="font-size:20px">NOK 59 M</div>
+            <div class="s-sub">21 bygg</div>
+          </div>
+          <div class="s-card">
+            <div class="s-label">KLP Eiendom</div>
+            <div class="s-value" style="font-size:20px">NOK 289 M</div>
+            <div class="s-sub">50 bygg</div>
+          </div>
+          <div class="s-card">
+            <div class="s-label">Aspelin Reitan Eiendom</div>
+            <div class="s-value" style="font-size:20px">NOK 92 M</div>
+            <div class="s-sub">14 bygg</div>
+          </div>
+          <div class="s-card">
+            <div class="s-label">Entra</div>
+            <div class="s-value" style="font-size:20px">NOK 340 M</div>
+            <div class="s-sub">75 bygg</div>
+          </div>
+          <div class="s-card">
+            <div class="s-label">NOK / møblert kvm</div>
+            <div class="s-value" style="font-size:20px">7 353</div>
+            <div class="s-sub">Kokstadvegen 23B ★ · NOK 5M / 17 000 kvm / MA 4%</div>
+          </div>
+        </div>
+        <table class="sum-table">
+          <thead><tr>
+            <th>Selskap</th><th class="r">Bygg</th><th class="r">Brutto kvm</th><th class="r">Møblert kvm</th><th class="r">Brutto møbelverdi</th><th class="r">Konservativt (80%)</th>
+          </tr></thead>
+          <tbody>
+            <tr><td>Nordea Liv Eiendom</td><td class="r">21</td><td class="r">208 077</td><td class="r">7 244</td><td class="r">NOK 59 M</td><td class="r">NOK 47 M</td></tr>
+            <tr><td>KLP Eiendom</td><td class="r">50</td><td class="r">~780 000</td><td class="r">~39 300</td><td class="r">NOK 289 M</td><td class="r">NOK 231 M</td></tr>
+            <tr><td>Aspelin Reitan Eiendom</td><td class="r">14</td><td class="r">~296 500</td><td class="r">~12 500</td><td class="r">NOK 92 M</td><td class="r">NOK 73 M</td></tr>
+            <tr><td>Entra</td><td class="r">75</td><td class="r">~1 154 000</td><td class="r">~46 200</td><td class="r">NOK 340 M</td><td class="r">NOK 272 M</td></tr>
+            <tr><td>TOTAL</td><td class="r">160</td><td class="r">~2 438 000</td><td class="r">~105 200</td><td class="r">NOK 779 M</td><td class="r">NOK 623 M</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="pane" id="pane-nordea">
+      <div class="toolbar">
+        <button class="filter-btn on" onclick="filter('nordea','all',this)">Alle</button>
+        <button class="filter-btn" onclick="filter('nordea','nå',this)">Nå</button>
+        <button class="filter-btn" onclick="filter('nordea','snart',this)">Snart</button>
+        <button class="filter-btn" onclick="filter('nordea','ok',this)">OK</button>
+        <button class="filter-btn" onclick="filter('nordea','ingen',this)">Ingen ennå</button>
+        <div class="toolbar-sum">Synlig: <b id="sum-nordea">NOK 59 M</b></div>
+      </div>
+      <div class="tbl-wrap"><table>
+        <colgroup><col style="width:36px"><col style="width:220px"><col style="width:90px"><col style="width:55px"><col style="width:85px"><col style="width:115px"><col style="width:90px"><col style="width:75px"><col style="width:95px"><col style="width:90px"></colgroup>
+        <thead><tr><th class="rn">#</th><th>Bygg</th><th class="r">Brutto kvm</th><th class="c">MA%</th><th class="r">Møblert kvm</th><th class="r">Møbelverdi</th><th class="c">Møbelalder</th><th class="c">Møbelår</th><th class="c">Status</th><th>By</th></tr></thead>
+        <tbody id="tbody-nordea"></tbody>
+      </table></div>
+    </div>
+
+    <div class="pane" id="pane-klp">
+      <div class="toolbar">
+        <button class="filter-btn on" onclick="filter('klp','all',this)">Alle</button>
+        <button class="filter-btn" onclick="filter('klp','nå',this)">Nå</button>
+        <button class="filter-btn" onclick="filter('klp','snart',this)">Snart</button>
+        <button class="filter-btn" onclick="filter('klp','ok',this)">OK</button>
+        <button class="filter-btn" onclick="filter('klp','ingen',this)">Ingen ennå</button>
+        <button class="filter-btn" onclick="filter('klp','oslo',this)">Oslo</button>
+        <button class="filter-btn" onclick="filter('klp','trondheim',this)">Trondheim</button>
+        <button class="filter-btn" onclick="filter('klp','bergen',this)">Bergen</button>
+        <div class="toolbar-sum">Synlig: <b id="sum-klp">NOK 289 M</b></div>
+      </div>
+      <div class="tbl-wrap"><table>
+        <colgroup><col style="width:36px"><col style="width:240px"><col style="width:90px"><col style="width:55px"><col style="width:85px"><col style="width:115px"><col style="width:90px"><col style="width:75px"><col style="width:95px"><col style="width:90px"></colgroup>
+        <thead><tr><th class="rn">#</th><th>Bygg</th><th class="r">Brutto kvm</th><th class="c">MA%</th><th class="r">Møblert kvm</th><th class="r">Møbelverdi</th><th class="c">Møbelalder</th><th class="c">Møbelår</th><th class="c">Status</th><th>By</th></tr></thead>
+        <tbody id="tbody-klp"></tbody>
+      </table></div>
+    </div>
+
+    <div class="pane" id="pane-are">
+      <div class="toolbar">
+        <button class="filter-btn on" onclick="filter('are','all',this)">Alle</button>
+        <button class="filter-btn" onclick="filter('are','nå',this)">Nå</button>
+        <button class="filter-btn" onclick="filter('are','snart',this)">Snart</button>
+        <button class="filter-btn" onclick="filter('are','ok',this)">OK</button>
+        <button class="filter-btn" onclick="filter('are','ingen',this)">Ingen ennå</button>
+        <div class="toolbar-sum">Synlig: <b id="sum-are">NOK 92 M</b></div>
+      </div>
+      <div class="tbl-wrap"><table>
+        <colgroup><col style="width:36px"><col style="width:240px"><col style="width:90px"><col style="width:55px"><col style="width:85px"><col style="width:115px"><col style="width:90px"><col style="width:75px"><col style="width:95px"><col style="width:90px"></colgroup>
+        <thead><tr><th class="rn">#</th><th>Bygg</th><th class="r">Brutto kvm</th><th class="c">MA%</th><th class="r">Møblert kvm</th><th class="r">Møbelverdi</th><th class="c">Møbelalder</th><th class="c">Møbelår</th><th class="c">Status</th><th>By</th></tr></thead>
+        <tbody id="tbody-are"></tbody>
+      </table></div>
+    </div>
+
+    <div class="pane" id="pane-entra">
+      <div class="toolbar">
+        <button class="filter-btn on" onclick="filter('entra','all',this)">Alle</button>
+        <button class="filter-btn" onclick="filter('entra','nå',this)">Nå</button>
+        <button class="filter-btn" onclick="filter('entra','snart',this)">Snart</button>
+        <button class="filter-btn" onclick="filter('entra','ok',this)">OK</button>
+        <button class="filter-btn" onclick="filter('entra','ingen',this)">Ingen ennå</button>
+        <button class="filter-btn" onclick="filter('entra','oslo',this)">Oslo</button>
+        <button class="filter-btn" onclick="filter('entra','bergen',this)">Bergen</button>
+        <button class="filter-btn" onclick="filter('entra','stavanger',this)">Stavanger</button>
+        <button class="filter-btn" onclick="filter('entra','drammen',this)">Drammen</button>
+        <div class="toolbar-sum">Synlig: <b id="sum-entra">NOK 340 M</b></div>
+      </div>
+      <div class="tbl-wrap"><table>
+        <colgroup><col style="width:36px"><col style="width:280px"><col style="width:90px"><col style="width:55px"><col style="width:85px"><col style="width:115px"><col style="width:90px"><col style="width:75px"><col style="width:95px"><col style="width:90px"></colgroup>
+        <thead><tr><th class="rn">#</th><th>Bygg</th><th class="r">Brutto kvm</th><th class="c">MA%</th><th class="r">Møblert kvm</th><th class="r">Møbelverdi</th><th class="c">Møbelalder</th><th class="c">Møbelår</th><th class="c">Status</th><th>By</th></tr></thead>
+        <tbody id="tbody-entra"></tbody>
+      </table></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const RATE = 7353;
+const fmtN = n => n >= 1e6 ? 'NOK '+(n/1e6).toFixed(1)+' M' : 'NOK '+(n/1e3).toFixed(0)+' k';
+const fmtK = n => n.toLocaleString('no');
+const badge = {
+  nå:    '<span class="badge b-nå">Nå</span>',
+  snart: '<span class="badge b-snart">Snart</span>',
+  ok:    '<span class="badge b-ok">OK</span>',
+  ingen: '<span class="badge b-ingen">Ingen ennå</span>',
+};
+
+const NORDEA = [
+  {n:'Folke Bernadottes vei 38',by:'Bergen',kvm:26094,ma:4,yr:2019,s:'nå'},
+  {n:'Nykirkebakken 2 / Verksgata 1',by:'Bergen',kvm:19580,ma:4,yr:2018,s:'nå'},
+  {n:'Økernveien 119-121',by:'Oslo',kvm:19325,ma:4,yr:2017,s:'nå'},
+  {n:'Kokstadvegen 23B ★',by:'Bergen',kvm:17000,ma:4,yr:2016,s:'nå'},
+  {n:'Fabrikkveien 36-38',by:'Stavanger',kvm:17962,ma:3,yr:2022,s:'snart'},
+  {n:'Rådhuspassasjen',by:'Oslo',kvm:10125,ma:5,yr:null,s:'ingen'},
+  {n:'Christian Krohgs gate 32',by:'Oslo',kvm:11300,ma:4,yr:2017,s:'nå'},
+  {n:'Dronning Mauds gate 15',by:'Oslo',kvm:9054,ma:4,yr:2019,s:'snart'},
+  {n:'Olav Kyrres gate 22',by:'Bergen',kvm:8965,ma:4,yr:2023,s:'ok'},
+  {n:'Fridtjof Nansens plass 7',by:'Oslo',kvm:6835,ma:5,yr:2017,s:'nå'},
+  {n:'Eikenga 31-33',by:'Oslo',kvm:10851,ma:3,yr:2015,s:'nå'},
+  {n:'Allehelgens gate 4',by:'Bergen',kvm:7558,ma:4,yr:2022,s:'snart'},
+  {n:'Havnespeilet (Sandnes)',by:'Stavanger',kvm:6370,ma:4,yr:2018,s:'nå'},
+  {n:'Cort Adelers gate 33',by:'Oslo',kvm:6313,ma:4,yr:2017,s:'nå'},
+  {n:'Munchs gate 5B',by:'Oslo',kvm:5214,ma:4,yr:2024,s:'ok'},
+  {n:'Kronprinsensgate 17',by:'Oslo',kvm:5096,ma:4,yr:2017,s:'nå'},
+  {n:'Kokstadflaten 4',by:'Bergen',kvm:4397,ma:4,yr:2025,s:'ok'},
+  {n:'Pilestredet 12',by:'Oslo',kvm:4142,ma:4,yr:2022,s:'snart'},
+  {n:'Valhallavegen 6',by:'Oslo',kvm:6092,ma:2,yr:2019,s:'snart'},
+  {n:'Fabrikkveien 41',by:'Stavanger',kvm:4022,ma:3,yr:2022,s:'snart'},
+  {n:'Henrik Ibsens gate 40-42',by:'Oslo',kvm:1782,ma:4,yr:null,s:'ingen'},
+];
+
+const KLP = [
+  {n:'Frydenlund (Pilestredet 40-52)',by:'Oslo',kvm:82320,ma:4,yr:2010,s:'nå'},
+  {n:'Trondheimsveien 2 (Schous)',by:'Oslo',kvm:54000,ma:4,yr:2018,s:'nå'},
+  {n:'Drammensveien 288',by:'Lysaker',kvm:53970,ma:4,yr:2020,s:'snart'},
+  {n:'Biskop Gunnerusgate 14',by:'Oslo',kvm:52600,ma:5,yr:null,s:'ingen'},
+  {n:'Akersgata 55',by:'Oslo',kvm:34500,ma:4,yr:2016,s:'nå'},
+  {n:'Ibsenkvartalet',by:'Oslo',kvm:33000,ma:4,yr:2015,s:'nå'},
+  {n:'Stortorvet 7',by:'Oslo',kvm:32700,ma:4,yr:2023,s:'ok'},
+  {n:'Schweigaardsgate 17-19',by:'Oslo',kvm:25000,ma:4,yr:2013,s:'nå'},
+  {n:'Dronning Eufemiasgate 10',by:'Oslo',kvm:25800,ma:4,yr:2012,s:'nå'},
+  {n:'Pilestredet 75C',by:'Oslo',kvm:24970,ma:4,yr:2016,s:'nå'},
+  {n:'Holbergs Terrasse',by:'Oslo',kvm:24670,ma:4,yr:2020,s:'snart'},
+  {n:'Eufemia (Dr. Eufemiasgate 71)',by:'Oslo',kvm:22422,ma:4,yr:2018,s:'snart'},
+  {n:'Wergelandsveien 1-3',by:'Oslo',kvm:21360,ma:3,yr:2015,s:'nå'},
+  {n:'Teknostallen (Teknobyen)',by:'Trondheim',kvm:36636,ma:5,yr:2024,s:'ok'},
+  {n:'Trondheim bygg 20 186 kvm',by:'Trondheim',kvm:20186,ma:4,yr:2015,s:'nå'},
+  {n:'Brøsetvegen 164 (Lyngården)',by:'Trondheim',kvm:19400,ma:4,yr:2015,s:'nå'},
+  {n:'Akersgata 64/68',by:'Oslo',kvm:20500,ma:4,yr:2016,s:'nå'},
+  {n:'Jonsvollskvartalet',by:'Bergen',kvm:19400,ma:5,yr:2020,s:'snart'},
+  {n:'Klæbuveien 72',by:'Trondheim',kvm:17706,ma:4,yr:2017,s:'nå'},
+  {n:'Lysaker Torg 45',by:'Lysaker',kvm:17152,ma:4,yr:2017,s:'nå'},
+  {n:'Trondheim bygg 17 222 kvm',by:'Trondheim',kvm:17222,ma:4,yr:2015,s:'nå'},
+  {n:'Trondheim bygg 16 562 kvm',by:'Trondheim',kvm:16562,ma:4,yr:2015,s:'nå'},
+  {n:'Trondheim bygg 15 000 kvm',by:'Trondheim',kvm:15000,ma:4,yr:2015,s:'nå'},
+  {n:'Schweigaardsgate 21',by:'Oslo',kvm:14827,ma:4,yr:2013,s:'nå'},
+  {n:'Schweigaardsgate 23',by:'Oslo',kvm:15093,ma:4,yr:2013,s:'nå'},
+  {n:'Lysaker Torg 35',by:'Lysaker',kvm:14607,ma:4,yr:2017,s:'nå'},
+  {n:'Munkedamsveien 35',by:'Oslo',kvm:14651,ma:4,yr:2017,s:'nå'},
+  {n:'Slemsdalsveien 37',by:'Oslo',kvm:14000,ma:4,yr:2016,s:'nå'},
+  {n:'Trondheim bygg 13 525 kvm',by:'Trondheim',kvm:13525,ma:4,yr:2016,s:'nå'},
+  {n:'Tempeveien 22 (MAX-bygget)',by:'Trondheim',kvm:13400,ma:4,yr:2018,s:'snart'},
+  {n:'Trondheim bygg 12 400 kvm',by:'Trondheim',kvm:12400,ma:4,yr:2016,s:'nå'},
+  {n:'Brynsengveien 10',by:'Oslo',kvm:12300,ma:4,yr:2016,s:'nå'},
+  {n:'Trondheim bygg 11 706 kvm',by:'Trondheim',kvm:11706,ma:4,yr:2016,s:'nå'},
+  {n:'Drammensveien 144',by:'Oslo',kvm:10950,ma:4,yr:2018,s:'snart'},
+  {n:'Stensberggata 26',by:'Oslo',kvm:10600,ma:4,yr:2017,s:'nå'},
+  {n:'Selma Ellefsens vei 8',by:'Oslo',kvm:10000,ma:3,yr:2016,s:'nå'},
+  {n:'Citypassagen',by:'Oslo',kvm:15000,ma:4,yr:2020,s:'snart'},
+  {n:'Holbergssgate 1',by:'Oslo',kvm:11120,ma:4,yr:2018,s:'snart'},
+  {n:'Hansteensgate 2',by:'Oslo',kvm:9000,ma:4,yr:2018,s:'snart'},
+  {n:'Prinsensgate 7-9',by:'Oslo',kvm:9000,ma:4,yr:2016,s:'nå'},
+  {n:'Tjuvholmen allé 11',by:'Oslo',kvm:8200,ma:4,yr:2021,s:'snart'},
+  {n:'Gryta 2B',by:'Trondheim',kvm:8600,ma:4,yr:2019,s:'snart'},
+  {n:'Tjuvholmen allé 16',by:'Oslo',kvm:6544,ma:4,yr:2018,s:'snart'},
+  {n:'Peter Egges plass 2',by:'Trondheim',kvm:7360,ma:4,yr:2010,s:'nå'},
+  {n:'Sluppenveien 12E',by:'Trondheim',kvm:7100,ma:4,yr:2017,s:'nå'},
+  {n:'Munkedamsveien 62 B-D',by:'Oslo',kvm:6570,ma:4,yr:2018,s:'snart'},
+  {n:'Universitetsgata 8',by:'Oslo',kvm:5000,ma:4,yr:2018,s:'snart'},
+  {n:'Brøsetvegen 168',by:'Trondheim',kvm:5593,ma:4,yr:2016,s:'nå'},
+  {n:'Stensberggata 29',by:'Oslo',kvm:3270,ma:4,yr:2017,s:'nå'},
+  {n:'Trondheim bygg 4 250 kvm',by:'Trondheim',kvm:4250,ma:4,yr:2016,s:'nå'},
+];
+
+const ARE = [
+  {n:'VIA Vika (Ruseløkkveien 26)',by:'Oslo',kvm:62500,ma:5,yr:2021,s:'snart'},
+  {n:'Rosenholm Campus',by:'Oslo',kvm:43000,ma:4,yr:2018,s:'snart'},
+  {n:'Schweigaards gate 33+28',by:'Oslo',kvm:35000,ma:4,yr:2019,s:'nå'},
+  {n:'Vulkan (kontor/næring)',by:'Oslo',kvm:30000,ma:4,yr:2014,s:'nå'},
+  {n:'Campus Ullevål',by:'Oslo',kvm:25000,ma:5,yr:null,s:'ingen'},
+  {n:'Over Spektrum',by:'Oslo',kvm:22500,ma:5,yr:null,s:'ingen'},
+  {n:'Karvesvingen 7 (Hasle Linie)',by:'Oslo',kvm:21000,ma:3,yr:2022,s:'snart'},
+  {n:'Fr. Nansens vei 17-19',by:'Oslo',kvm:8000,ma:4,yr:2017,s:'nå'},
+  {n:'Essendrops gate 3',by:'Oslo',kvm:6000,ma:4,yr:2017,s:'nå'},
+  {n:'Trelastgården',by:'Oslo',kvm:8000,ma:4,yr:2023,s:'ok'},
+  {n:'Pressens hus',by:'Oslo',kvm:7000,ma:4,yr:2019,s:'snart'},
+  {n:'Vulkan 7–11 (Bellonahuset)',by:'Oslo',kvm:5000,ma:4,yr:2010,s:'nå'},
+  {n:'Hausmannsgate 16',by:'Oslo',kvm:4000,ma:4,yr:2012,s:'nå'},
+  {n:'Schweigaarden (Landbrukskvart.)',by:'Oslo',kvm:9500,ma:5,yr:null,s:'ingen'},
+];
+
+function renderTable(id, data) {
+  data.sort((a,b) => (b.kvm*b.ma/100 - a.kvm*a.ma/100));
+  const tbody = document.getElementById('tbody-'+id);
+  let html = '', total = 0;
+  data.forEach((r, i) => {
+    const maKvm = Math.round(r.kvm * r.ma / 100);
+    const v = Math.round(maKvm * RATE);
+    total += v;
+    const alder = r.yr ? (2026-r.yr)+' år?' : '—';
+    html += `<tr class="row-${r.s}" data-s="${r.s}" data-by="${r.by.toLowerCase()}">
+      <td class="rn">${i+1}</td>
+      <td title="${r.n}">${r.n}</td>
+      <td class="r">${fmtK(r.kvm)}</td>
+      <td class="c">${r.ma}%</td>
+      <td class="r">${fmtK(maKvm)}</td>
+      <td class="r">${fmtN(v)}</td>
+      <td class="c" style="color:#999;font-size:11px;font-style:italic">${alder}</td>
+      <td class="c" style="font-family:'IBM Plex Mono',monospace">${r.yr||'—'}</td>
+      <td class="c">${badge[r.s]||''}</td>
+      <td>${r.by}</td>
+    </tr>`;
+  });
+  html += `<tr class="row-total"><td></td><td><b>TOTAL</b></td><td class="r"></td><td></td><td class="r"></td><td class="r"><b>${fmtN(total)}</b></td><td colspan="4"></td></tr>`;
+  tbody.innerHTML = html;
+}
+
+const ENTRA = [
+  {n:'Observatoriegata 1 – Halvbroren og Magasinet',by:'Oslo',kvm:17430,ma:4,yr:2005,s:'nå'},
+  {n:'Henrik Ibsens gate 110 – Nasjonalbiblioteket',by:'Oslo',kvm:19656,ma:4,yr:1914,s:'nå'},
+  {n:'Nedre Voll gate 11',by:'Oslo',kvm:9209,ma:4,yr:1913,s:'nå'},
+  {n:'Karenslyst allé 7',by:'Oslo',kvm:9482,ma:4,yr:1999,s:'nå'},
+  {n:'Grønland 53',by:'Drammen',kvm:11574,ma:4,yr:2015,s:'nå'},
+  {n:'Malmskriverveien 4',by:'Oslo',kvm:5734,ma:4,yr:1971,s:'nå'},
+  {n:'Malmskriverveien 2',by:'Oslo',kvm:1593,ma:4,yr:1971,s:'nå'},
+  {n:'Biskop Gunnerus gate 14 – Posthuset',by:'Oslo',kvm:50860,ma:4,yr:1976,s:'nå'},
+  {n:'Christian Krohgs gate 2',by:'Oslo',kvm:12867,ma:4,yr:1900,s:'nå'},
+  {n:'Verkstedveien 1',by:'Oslo',kvm:31740,ma:4,yr:2015,s:'nå'},
+  {n:'Tordenskiolds gate 12',by:'Oslo',kvm:12974,ma:4,yr:1937,s:'nå'},
+  {n:'Nygårdsgaten 95',by:'Bergen',kvm:12069,ma:4,yr:2022,s:'snart'},
+  {n:'Lars Hilles gate 19',by:'Bergen',kvm:6536,ma:4,yr:1965,s:'nå'},
+  {n:'Hagegata 22-24',by:'Oslo',kvm:26876,ma:4,yr:1976,s:'nå'},
+  {n:'Grensesvingen 7',by:'Oslo',kvm:23329,ma:4,yr:1986,s:'nå'},
+  {n:'Vahls gate 1-3',by:'Oslo',kvm:14887,ma:4,yr:2002,s:'nå'},
+  {n:'Grønland 51',by:'Drammen',kvm:14700,ma:4,yr:2012,s:'nå'},
+  {n:'Akersgata 34-36',by:'Oslo',kvm:6152,ma:4,yr:1900,s:'nå'},
+  {n:'Brynsengfaret 6',by:'Oslo',kvm:33387,ma:4,yr:null,s:'ingen'},
+  {n:'Fredrik Selmers vei 6',by:'Oslo',kvm:14703,ma:4,yr:1966,s:'nå'},
+  {n:'Stenersgata 1 – Oslo City',by:'Oslo',kvm:31969,ma:4,yr:null,s:'ingen'},
+  {n:'Schweigaards gate 15B',by:'Oslo',kvm:14741,ma:4,yr:2010,s:'nå'},
+  {n:'Schweigaards gate 15',by:'Oslo',kvm:22638,ma:4,yr:1919,s:'nå'},
+  {n:'Biskop Gunnerus gate 6 – Byporten',by:'Oslo',kvm:9300,ma:4,yr:1999,s:'nå'},
+  {n:'Tullins gate 2',by:'Oslo',kvm:6909,ma:4,yr:1960,s:'nå'},
+  {n:'Pilestredet 33',by:'Oslo',kvm:21004,ma:4,yr:1964,s:'nå'},
+  {n:'Grensesvingen 26',by:'Oslo',kvm:18108,ma:4,yr:1987,s:'nå'},
+  {n:'Fyrstikkalléen 1',by:'Oslo',kvm:39639,ma:4,yr:2020,s:'snart'},
+  {n:'Storgata 51',by:'Oslo',kvm:10935,ma:4,yr:1937,s:'nå'},
+  {n:'Lilletorget 1',by:'Oslo',kvm:14867,ma:4,yr:1934,s:'nå'},
+  {n:'Lakkegata 53',by:'Oslo',kvm:31670,ma:4,yr:2016,s:'nå'},
+  {n:'Tvetenveien 22',by:'Oslo',kvm:4126,ma:4,yr:1969,s:'nå'},
+  {n:'Verkstedveien 3',by:'Oslo',kvm:8385,ma:4,yr:2002,s:'nå'},
+  {n:'Schweigaards gate 6-14',by:'Oslo',kvm:25944,ma:4,yr:1989,s:'nå'},
+  {n:'Kaigaten 9',by:'Bergen',kvm:9900,ma:4,yr:1999,s:'nå'},
+  {n:'Nonnesetergaten 4',by:'Bergen',kvm:17213,ma:4,yr:2008,s:'nå'},
+  {n:'Schweigaards gate 16',by:'Oslo',kvm:15497,ma:4,yr:2015,s:'nå'},
+  {n:'Malmskriverveien 16',by:'Oslo',kvm:2720,ma:4,yr:2024,s:'ok'},
+  {n:'Keysers gate 13 / Munchs gate 4',by:'Oslo',kvm:10839,ma:4,yr:1885,s:'nå'},
+  {n:'Lars Hilles gate 30',by:'Bergen',kvm:45707,ma:4,yr:2017,s:'nå'},
+  {n:'Fredrik Selmers vei 4',by:'Oslo',kvm:38027,ma:4,yr:1985,s:'nå'},
+  {n:'Malmskriverveien 18',by:'Oslo',kvm:8951,ma:4,yr:2006,s:'nå'},
+  {n:'Universitetsgata 2',by:'Oslo',kvm:28425,ma:4,yr:1962,s:'nå'},
+  {n:'Valkendorfsgate 6',by:'Bergen',kvm:13260,ma:4,yr:1933,s:'nå'},
+  {n:'Otto Sverdrups plass 4',by:'Oslo',kvm:16038,ma:4,yr:2014,s:'nå'},
+  {n:'Professor Olav Hanssens vei 10',by:'Stavanger',kvm:36400,ma:4,yr:1986,s:'nå'},
+  {n:'Møllendalsveien 6-8',by:'Bergen',kvm:15724,ma:4,yr:1990,s:'nå'},
+  {n:'Møllendalsveien 1A',by:'Bergen',kvm:6095,ma:4,yr:2004,s:'nå'},
+  {n:'Løkketangen 2-14B',by:'Oslo',kvm:18170,ma:4,yr:1979,s:'nå'},
+  {n:'Grønland 60 – Union Scene',by:'Drammen',kvm:8727,ma:4,yr:1900,s:'nå'},
+  {n:'Drammensveien 134',by:'Oslo',kvm:20933,ma:4,yr:2005,s:'nå'},
+  {n:'Østensjøveien 39-41',by:'Oslo',kvm:5659,ma:4,yr:null,s:'ingen'},
+  {n:'St. Olavs plass 5',by:'Oslo',kvm:16433,ma:4,yr:1969,s:'nå'},
+  {n:'Kristian Augusts gate 13',by:'Oslo',kvm:4101,ma:4,yr:1958,s:'nå'},
+  {n:'Kjørboveien 12-24 – Powerhouse Kjørbo',by:'Oslo',kvm:18392,ma:4,yr:1980,s:'nå'},
+  {n:'Grønland 58',by:'Drammen',kvm:21472,ma:4,yr:2006,s:'nå'},
+  {n:'Brynsveien 11-13',by:'Oslo',kvm:12401,ma:4,yr:1998,s:'nå'},
+  {n:'Drammensveien 131',by:'Oslo',kvm:13098,ma:4,yr:2014,s:'nå'},
+  {n:'Christian Krohgs gate 10',by:'Oslo',kvm:5480,ma:4,yr:2001,s:'nå'},
+  {n:'Universitetsgata 1-9',by:'Oslo',kvm:22076,ma:4,yr:2021,s:'snart'},
+  {n:'Allehelgensgate 6',by:'Bergen',kvm:14104,ma:4,yr:1965,s:'nå'},
+  {n:'Lagårdsveien 6',by:'Stavanger',kvm:16996,ma:4,yr:2009,s:'nå'},
+  {n:'Kristian Augusts gate 15-17 – Domus Juridica',by:'Oslo',kvm:21156,ma:4,yr:2019,s:'snart'},
+  {n:'Kjørboveien 33',by:'Oslo',kvm:14676,ma:4,yr:1985,s:'nå'},
+  {n:'Vestfjordgaten 4',by:'Oslo',kvm:23765,ma:4,yr:2010,s:'nå'},
+  {n:'Kjørboveien 27-29',by:'Oslo',kvm:7576,ma:4,yr:1985,s:'nå'},
+  {n:'Brynsengfaret 4 – Spinneriet',by:'Oslo',kvm:1972,ma:4,yr:1889,s:'nå'},
+  {n:'Tvetenveien 22B',by:'Oslo',kvm:4126,ma:4,yr:1969,s:'nå'},
+  {n:'Keysers gate 15',by:'Oslo',kvm:2166,ma:4,yr:null,s:'ingen'},
+  {n:'Brynsveien 5',by:'Oslo',kvm:6127,ma:4,yr:null,s:'ingen'},
+  {n:'Nils Hansens vei 20',by:'Oslo',kvm:3149,ma:4,yr:null,s:'ingen'},
+  {n:'Østensjøveien 43',by:'Oslo',kvm:6823,ma:4,yr:null,s:'ingen'},
+  {n:'Kreftings gate 33',by:'Drammen',kvm:3890,ma:4,yr:null,s:'ingen'},
+  {n:'Malmskriverveien 20',by:'Oslo',kvm:2720,ma:4,yr:1872,s:'nå'},
+  {n:'Lagårdsveien 10',by:'Stavanger',kvm:8800,ma:4,yr:2014,s:'nå'},
+];
+
+renderTable('nordea', NORDEA);
+renderTable('klp', KLP);
+renderTable('are', ARE);
+renderTable('entra', ENTRA);
+
+function switchTab(id, el) {
+  document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('pane-'+id).classList.add('active');
+  el.classList.add('active');
+}
+
+function filter(id, f, btn) {
+  btn.closest('.toolbar').querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  const rows = document.querySelectorAll(`#tbody-${id} tr:not(.row-total)`);
+  let total = 0;
+  rows.forEach(r => {
+    const show = f === 'all' || r.dataset.s === f || r.dataset.by.includes(f);
+    r.classList.toggle('hidden', !show);
+    if (show) {
+      const cell = r.cells[5]?.textContent || '';
+      const m = cell.match(/([\d.,]+)\s*M/);
+      const k = cell.match(/([\d.,]+)\s*k/);
+      if (m) total += parseFloat(m[1].replace(',','.')) * 1e6;
+      else if (k) total += parseFloat(k[1].replace(',','.')) * 1e3;
+    }
+  });
+  document.getElementById('sum-'+id).textContent = fmtN(total);
+}
+</script>
+</body>
+</html>
