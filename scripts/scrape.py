@@ -679,6 +679,8 @@ function filter(id, f, btn) {{
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
+    from signals import hent_signaler, appliser_signaler
+
     # 1. Kjente selskaper med tilpassede scrapere
     known = [
         ("nordea", "Nordea Liv Eiendom", scrape_nordea()),
@@ -720,7 +722,19 @@ if __name__ == "__main__":
     companies = known + auto
     print(f"\nTotalt: {len(companies)} selskaper")
 
-    # 3. Bygg og lagre HTML
+    # 3. Hent oppussings-/innredningssignaler og oppdater møbelstatus
+    print("\nHenter signaler fra arkitekt-/interiørfirmaer...")
+    signaler = hent_signaler()
+    total_oppdatert = 0
+    companies_med_signaler = []
+    for cid, label, bygg in companies:
+        oppdatert_bygg, n = appliser_signaler(bygg, signaler)
+        total_oppdatert += n
+        companies_med_signaler.append((cid, label, oppdatert_bygg))
+    companies = companies_med_signaler
+    print(f"  {total_oppdatert} bygg fikk oppdatert møbelstatus fra signaler")
+
+    # 4. Bygg og lagre HTML
     html = build_html(companies)
     out = Path(__file__).parent.parent / "index.html"
     out.write_text(html, encoding="utf-8")
