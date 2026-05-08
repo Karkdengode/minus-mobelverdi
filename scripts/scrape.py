@@ -630,7 +630,8 @@ function renderTable(id, data) {{
     const maKvm = Math.round(r.kvm * r.ma / 100);
     const v = Math.round(maKvm * RATE);
     total += v;
-    const alder = r.yr ? ({THIS_YEAR}-r.yr)+' år' : '—';
+    const age = r.yr ? {THIS_YEAR} - r.yr : null;
+    const alder = (age !== null && age <= 10) ? age + ' år' : '—';
     const yrCell = r.yr
       ? (r.src ? `<a href="${{r.src}}" target="_blank" rel="noopener" title="Kilde: ${{r.src}}" style="font-family:'IBM Plex Mono',monospace;color:var(--accent);text-decoration:none;border-bottom:1px dashed var(--accent)">${{r.yr}} ↗</a>`
                : `<span style="font-family:'IBM Plex Mono',monospace">${{r.yr}}</span>`)
