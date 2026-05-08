@@ -32,18 +32,31 @@ THIS_YEAR = date.today().year
 # ---------------------------------------------------------------------------
 
 ADRESSE_TREFF = [
+    # Entra
     "Lakkegata 53", "Verkstedveien 1", "Verkstedveien 3",
     "Biskop Gunnerus", "Hagegata 22", "Grensesvingen",
-    "Pilestredet 33", "Pilestredet 40", "Pilestredet 75",
-    "Akersgata 55", "Akersgata 64", "Akersgata 34",
+    "Pilestredet 33", "Akersgata 34", "Akersgata 55", "Akersgata 64",
     "Schweigaard", "Fyrstikkalléen", "Fyrstikkalleen",
     "Universitetsgata 2", "Drammensveien 134", "Drammensveien 288",
     "Lars Hilles gate", "Nygårdsgaten 95", "Nonnesetergaten",
+    "Kristian Augusts gate", "KA13", "Tullinløkka",
+    "Otto Sverdrups", "Vahls gate", "Løkketangen",
+    "Brynsveien", "Brynsengfaret", "Stenersgata",
+    "Kjørboveien", "Malmskriverveien", "Tordenskiolds gate",
+    # KLP
+    "Pilestredet 40", "Pilestredet 75",
     "Trondheimsveien 2", "Stortorvet 7",
-    "Ruseløkkveien 26", "Rosenholm",
+    "Munkedamsveien", "Holbergs Terrasse",
+    "Ibsenkvartalet", "Dronning Eufemia",
+    "Teknostallen", "Brøsetvegen", "Klæbuveien",
+    "Lysaker Torg",
+    # Nordea
     "Folke Bernadottes", "Kokstadvegen", "Nykirkebakken",
-    "Fabrikkveien 36", "Eikenga",
-    "Brynsengfaret", "Stenersgata",
+    "Fabrikkveien 36", "Eikenga", "Olav Kyrres gate",
+    "Dronning Mauds gate",
+    # Aspelin Reitan
+    "Ruseløkkveien 26", "Rosenholm", "Karvesvingen",
+    "Vulkan", "Hausmannsgate 16",
 ]
 
 SELSKAP_TREFF = [
@@ -66,6 +79,27 @@ FIRMAER = [
             "klient":    r"Oppdragsgiver[:\s]*([^\n|]{3,80})",
             "yr":        r"(?:Ferdigstilt|År)[:\s]*(\d{4})",
             "kvm":       r"Kvm[:\s]*([\d\s]+)",
+        },
+    },
+    {
+        "navn": "Scenario",
+        "liste_url": "https://scenario.no/scenario-prosjekter",
+        "proj_pattern": r"scenario\.no/prosjekter/[^/\"']+/?$",
+        "felt": {
+            "adresse":   r"(?:Adresse|Lokasjon|Sted)[:\s]*([^\n|]{5,80})",
+            "klient":    r"(?:Kunde|Byggherre|Oppdragsgiver)[:\s]*([^\n|]{3,80})",
+            "yr":        r"År[:\s]*(20\d{2})",
+            "kvm":       r"Areal[:\s]*([^\n|]{3,30})",
+        },
+    },
+    {
+        "navn": "Sane",
+        "liste_url": "https://www.sane.no/prosjekter/",
+        "proj_pattern": r"sane\.no/prosjekter?/[^/\"']+/?$",
+        "felt": {
+            "adresse":   r"(?:Adresse|Lokasjon|Sted)[:\s]*([^\n|]{5,80})",
+            "klient":    r"(?:Oppdragsgiver|Kunde|Klient|Byggherre)[:\s]*([^\n|]{3,80})",
+            "yr":        r"(?:Ferdigstilt|År|Årstall)[:\s]*(20\d{2})",
         },
     },
     {
