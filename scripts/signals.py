@@ -64,12 +64,21 @@ ADRESSE_TREFF = [
     "Roald Amundsens gate 6", "Beddingen 16", "Sirkeltomten",
     "Krinkelkroken 1", "Strandgaten 17", "Rosenkrantzgaten 12",
     "Starvhusgaten", "Markeveien 1", "Sandslihaugen 30",
+    # Norwegian Property (NPRO)
+    "Martin Linges vei 33", "Snarøyveien 30", "Snarøyveien 36",
+    "Terminalbygget", "Verkstedhallene", "Telegrafen",
+    # Avantor (Nydalen)
+    "Nydalsveien", "Gjerdrums vei", "Sandakerveien", "Maridalsveien",
+    # Bane NOR Eiendom
+    "Oslo S", "Nationaltheatret stasjon", "Filipstad",
 ]
 
 SELSKAP_TREFF = [
-    "Entra", "KLP Eiendom", "KLP", "Nordea Liv",
+    "Entra", "KLP Eiendom", "KLP",
     "Aspelin Reitan", "Norwegian Property", "NPRO",
-    "Storebrand Eiendom", "DNB Næringseiendom", "DNB Eiendom",
+    "Storebrand Eiendom", "Storebrand",
+    "DNB Næringseiendom", "DNB Eiendom",
+    "Avantor", "Bane NOR Eiendom", "Bane NOR",
 ]
 
 # ---------------------------------------------------------------------------

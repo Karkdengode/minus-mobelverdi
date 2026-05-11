@@ -48,7 +48,7 @@ def brreg_finn_kandidater(min_omsetning=MIN_OMSETNING_NOK, maks_kandidater=50):
                     params={
                         "naeringskode": kode,
                         "regnskapstype": "SELSKAP",
-                        "år": THIS_YEAR - 1,
+                        "år": THIS_YEAR - 2,  # 2024: current year reports not filed until mid-year
                         "size": 100,
                         "page": side,
                         "sort": "resultatregnskapResultat.driftsresultat.driftsinntekter.sumDriftsinntekter,desc",
@@ -280,86 +280,164 @@ def scrape_entra():
 
 
 def scrape_klp():
-    print("Scraper KLP Eiendom (hardkodet)...")
-    return [
-        {"n":"Frydenlund (Pilestredet 40-52)","by":"Oslo","kvm":82320,"ma":4,"yr":2010,"s":"nå"},
-        {"n":"Trondheimsveien 2 (Schous)","by":"Oslo","kvm":54000,"ma":4,"yr":2018,"s":"nå"},
-        {"n":"Drammensveien 288","by":"Lysaker","kvm":53970,"ma":4,"yr":2020,"s":"snart"},
-        {"n":"Biskop Gunnerusgate 14","by":"Oslo","kvm":52600,"ma":5,"yr":None,"s":"ingen"},
-        {"n":"Akersgata 55","by":"Oslo","kvm":34500,"ma":4,"yr":2016,"s":"nå"},
-        {"n":"Ibsenkvartalet","by":"Oslo","kvm":33000,"ma":4,"yr":2015,"s":"nå"},
-        {"n":"Stortorvet 7","by":"Oslo","kvm":32700,"ma":4,"yr":2023,"s":"ok"},
-        {"n":"Schweigaardsgate 17-19","by":"Oslo","kvm":25000,"ma":4,"yr":2013,"s":"nå"},
-        {"n":"Dronning Eufemiasgate 10","by":"Oslo","kvm":25800,"ma":4,"yr":2012,"s":"nå"},
-        {"n":"Pilestredet 75C","by":"Oslo","kvm":24970,"ma":4,"yr":2016,"s":"nå"},
-        {"n":"Holbergs Terrasse","by":"Oslo","kvm":24670,"ma":4,"yr":2020,"s":"snart"},
-        {"n":"Eufemia (Dr. Eufemiasgate 71)","by":"Oslo","kvm":22422,"ma":4,"yr":2018,"s":"snart"},
-        {"n":"Wergelandsveien 1-3","by":"Oslo","kvm":21360,"ma":3,"yr":2015,"s":"nå"},
-        {"n":"Teknostallen (Teknobyen)","by":"Trondheim","kvm":36636,"ma":5,"yr":2024,"s":"ok"},
-        {"n":"Trondheim bygg 20 186 kvm","by":"Trondheim","kvm":20186,"ma":4,"yr":2015,"s":"nå"},
-        {"n":"Brøsetvegen 164 (Lyngården)","by":"Trondheim","kvm":19400,"ma":4,"yr":2015,"s":"nå"},
-        {"n":"Akersgata 64/68","by":"Oslo","kvm":20500,"ma":4,"yr":2016,"s":"nå"},
-        {"n":"Jonsvollskvartalet","by":"Bergen","kvm":19400,"ma":5,"yr":2020,"s":"snart"},
-        {"n":"Klæbuveien 72","by":"Trondheim","kvm":17706,"ma":4,"yr":2017,"s":"nå"},
-        {"n":"Lysaker Torg 45","by":"Lysaker","kvm":17152,"ma":4,"yr":2017,"s":"nå"},
-        {"n":"Trondheim bygg 17 222 kvm","by":"Trondheim","kvm":17222,"ma":4,"yr":2015,"s":"nå"},
-        {"n":"Trondheim bygg 16 562 kvm","by":"Trondheim","kvm":16562,"ma":4,"yr":2015,"s":"nå"},
-        {"n":"Trondheim bygg 15 000 kvm","by":"Trondheim","kvm":15000,"ma":4,"yr":2015,"s":"nå"},
-        {"n":"Schweigaardsgate 21","by":"Oslo","kvm":14827,"ma":4,"yr":2013,"s":"nå"},
-        {"n":"Schweigaardsgate 23","by":"Oslo","kvm":15093,"ma":4,"yr":2013,"s":"nå"},
-        {"n":"Lysaker Torg 35","by":"Lysaker","kvm":14607,"ma":4,"yr":2017,"s":"nå"},
-        {"n":"Munkedamsveien 35","by":"Oslo","kvm":14651,"ma":4,"yr":2017,"s":"nå"},
-        {"n":"Slemsdalsveien 37","by":"Oslo","kvm":14000,"ma":4,"yr":2016,"s":"nå"},
-        {"n":"Trondheim bygg 13 525 kvm","by":"Trondheim","kvm":13525,"ma":4,"yr":2016,"s":"nå"},
-        {"n":"Tempeveien 22 (MAX-bygget)","by":"Trondheim","kvm":13400,"ma":4,"yr":2018,"s":"snart"},
-        {"n":"Trondheim bygg 12 400 kvm","by":"Trondheim","kvm":12400,"ma":4,"yr":2016,"s":"nå"},
-        {"n":"Brynsengveien 10","by":"Oslo","kvm":12300,"ma":4,"yr":2016,"s":"nå"},
-        {"n":"Trondheim bygg 11 706 kvm","by":"Trondheim","kvm":11706,"ma":4,"yr":2016,"s":"nå"},
-        {"n":"Drammensveien 144","by":"Oslo","kvm":10950,"ma":4,"yr":2018,"s":"snart"},
-        {"n":"Stensberggata 26","by":"Oslo","kvm":10600,"ma":4,"yr":2017,"s":"nå"},
-        {"n":"Selma Ellefsens vei 8","by":"Oslo","kvm":10000,"ma":3,"yr":2016,"s":"nå"},
-        {"n":"Citypassagen","by":"Oslo","kvm":15000,"ma":4,"yr":2020,"s":"snart"},
-        {"n":"Holbergssgate 1","by":"Oslo","kvm":11120,"ma":4,"yr":2018,"s":"snart"},
-        {"n":"Hansteensgate 2","by":"Oslo","kvm":9000,"ma":4,"yr":2018,"s":"snart"},
-        {"n":"Prinsensgate 7-9","by":"Oslo","kvm":9000,"ma":4,"yr":2016,"s":"nå"},
-        {"n":"Tjuvholmen allé 11","by":"Oslo","kvm":8200,"ma":4,"yr":2021,"s":"snart"},
-        {"n":"Gryta 2B","by":"Trondheim","kvm":8600,"ma":4,"yr":2019,"s":"snart"},
-        {"n":"Tjuvholmen allé 16","by":"Oslo","kvm":6544,"ma":4,"yr":2018,"s":"snart"},
-        {"n":"Peter Egges plass 2","by":"Trondheim","kvm":7360,"ma":4,"yr":2010,"s":"nå"},
-        {"n":"Sluppenveien 12E","by":"Trondheim","kvm":7100,"ma":4,"yr":2017,"s":"nå"},
-        {"n":"Munkedamsveien 62 B-D","by":"Oslo","kvm":6570,"ma":4,"yr":2018,"s":"snart"},
-        {"n":"Universitetsgata 8","by":"Oslo","kvm":5000,"ma":4,"yr":2018,"s":"snart"},
-        {"n":"Brøsetvegen 168","by":"Trondheim","kvm":5593,"ma":4,"yr":2016,"s":"nå"},
-        {"n":"Stensberggata 29","by":"Oslo","kvm":3270,"ma":4,"yr":2017,"s":"nå"},
-        {"n":"Trondheim bygg 4 250 kvm","by":"Trondheim","kvm":4250,"ma":4,"yr":2016,"s":"nå"},
-    ]
+    print("Scraper KLP Eiendom...")
+    results = []
+    base = "https://www.klpeiendom.no"
+    prop_links = set()
+
+    # Sitemap only has category-level URLs — scrape portfolio listing pages directly
+    SKIP_CATS = {"logistikk", "hotell", "kjopesenter", "utleieboliger"}
+    for city in ["oslo", "trondheim", "bergen", "stavanger"]:
+        for cat in ["n%C3%A6ringsbygg", "kontor-og-naeringslokaler"]:
+            try:
+                r = requests.get(
+                    f"{base}/{city}/portefolje/{cat}",
+                    headers=HEADERS, timeout=12, verify=False,
+                )
+                if r.status_code != 200:
+                    continue
+                soup = BeautifulSoup(r.text, "lxml")
+                for a in soup.find_all("a", href=True):
+                    href = a["href"]
+                    if "/portefolje/" in href and "?" not in href:
+                        slug = href.rstrip("/").split("/")[-1]
+                        if slug and slug not in SKIP_CATS and len(slug) > 3:
+                            full = href if href.startswith("http") else base + href
+                            prop_links.add(full)
+            except Exception:
+                pass
+
+    for url in list(prop_links)[:80]:
+        try:
+            pr = requests.get(url, headers=HEADERS, timeout=10, verify=False)
+            if pr.status_code != 200:
+                continue
+            soup = BeautifulSoup(pr.text, "lxml")
+            raw = soup.get_text(" ", strip=True)
+            kvm_m = re.search(r'Areal[:\s]*([\d]{1,3}(?:[.\s\xa0][\d]{3})+|[\d]{3,6})\s*kvm', raw, re.IGNORECASE)
+            if not kvm_m:
+                continue
+            kvm = int(re.sub(r'[^\d]', '', kvm_m.group(1)))
+            if kvm < 500 or kvm > 500_000:
+                continue
+            h1 = soup.find("h1")
+            name = h1.get_text(strip=True) if h1 else url.split("/")[-1].replace("-", " ").title()
+            yr = _parse_year(raw)
+            results.append({"n": name, "by": _city(raw), "kvm": kvm, "ma": 4, "yr": yr, "s": status(yr)})
+            time.sleep(0.15)
+        except Exception:
+            pass
+
+    total_kvm = sum(r["kvm"] for r in results)
+    print(f"  KLP Eiendom: {len(results)} bygg | {total_kvm:,} kvm")
+    return results if total_kvm >= MIN_KVM else []
 
 
-def scrape_nordea():
-    print("Scraper Nordea Liv Eiendom (hardkodet)...")
-    return [
-        {"n":"Folke Bernadottes vei 38","by":"Bergen","kvm":26094,"ma":4,"yr":2019,"s":"nå"},
-        {"n":"Nykirkebakken 2 / Verksgata 1","by":"Bergen","kvm":19580,"ma":4,"yr":2018,"s":"nå"},
-        {"n":"Økernveien 119-121","by":"Oslo","kvm":19325,"ma":4,"yr":2017,"s":"nå"},
-        {"n":"Kokstadvegen 23B ★","by":"Bergen","kvm":17000,"ma":4,"yr":2016,"s":"nå"},
-        {"n":"Fabrikkveien 36-38","by":"Stavanger","kvm":17962,"ma":3,"yr":2022,"s":"snart"},
-        {"n":"Rådhuspassasjen","by":"Oslo","kvm":10125,"ma":5,"yr":None,"s":"ingen"},
-        {"n":"Christian Krohgs gate 32","by":"Oslo","kvm":11300,"ma":4,"yr":2017,"s":"nå"},
-        {"n":"Dronning Mauds gate 15","by":"Oslo","kvm":9054,"ma":4,"yr":2019,"s":"snart"},
-        {"n":"Olav Kyrres gate 22","by":"Bergen","kvm":8965,"ma":4,"yr":2023,"s":"ok"},
-        {"n":"Fridtjof Nansens plass 7","by":"Oslo","kvm":6835,"ma":5,"yr":2017,"s":"nå"},
-        {"n":"Eikenga 31-33","by":"Oslo","kvm":10851,"ma":3,"yr":2015,"s":"nå"},
-        {"n":"Allehelgens gate 4","by":"Bergen","kvm":7558,"ma":4,"yr":2022,"s":"snart"},
-        {"n":"Havnespeilet (Sandnes)","by":"Stavanger","kvm":6370,"ma":4,"yr":2018,"s":"nå"},
-        {"n":"Cort Adelers gate 33","by":"Oslo","kvm":6313,"ma":4,"yr":2017,"s":"nå"},
-        {"n":"Munchs gate 5B","by":"Oslo","kvm":5214,"ma":4,"yr":2024,"s":"ok"},
-        {"n":"Kronprinsensgate 17","by":"Oslo","kvm":5096,"ma":4,"yr":2017,"s":"nå"},
-        {"n":"Kokstadflaten 4","by":"Bergen","kvm":4397,"ma":4,"yr":2025,"s":"ok"},
-        {"n":"Pilestredet 12","by":"Oslo","kvm":4142,"ma":4,"yr":2022,"s":"snart"},
-        {"n":"Valhallavegen 6","by":"Oslo","kvm":6092,"ma":2,"yr":2019,"s":"snart"},
-        {"n":"Fabrikkveien 41","by":"Stavanger","kvm":4022,"ma":3,"yr":2022,"s":"snart"},
-        {"n":"Henrik Ibsens gate 40-42","by":"Oslo","kvm":1782,"ma":4,"yr":None,"s":"ingen"},
-    ]
+def scrape_npro():
+    print("Scraper Norwegian Property (NPRO)...")
+    results = []
+    base = "https://www.norwegianproperty.no"
+    prop_links = set()
+
+    try:
+        r = requests.get(f"{base}/no/properties/", headers=HEADERS, timeout=12, verify=False)
+        if r.status_code == 200:
+            soup = BeautifulSoup(r.text, "lxml")
+            for a in soup.find_all("a", href=True):
+                href = a["href"]
+                if "/properties/" in href and href.count("/") >= 4 and "?" not in href:
+                    full = href if href.startswith("http") else base + href
+                    prop_links.add(full)
+    except Exception:
+        pass
+
+    for url in list(prop_links)[:40]:
+        try:
+            pr = requests.get(url, headers=HEADERS, timeout=10, verify=False)
+            if pr.status_code != 200:
+                continue
+            soup = BeautifulSoup(pr.text, "lxml")
+            raw = soup.get_text(" ", strip=True)
+            # Normalize encoding artifacts (UTF-8 bytes decoded as Latin-1: \xc2\xa0 → Â + space)
+            raw = raw.replace('\xc2\xa0', ' ').replace('\xa0', ' ')
+            # NPRO format: "Areal 88 492 m2" — allow any non-letter between digit groups
+            kvm_m = re.search(r'(?:Areal|Area)[^0-9\n]{0,20}([0-9][^a-zA-ZæøåÆØÅ\n]{0,15})(?:m[²2²]|kvm)', raw, re.IGNORECASE)
+            if not kvm_m:
+                continue
+            kvm = int(re.sub(r'[^\d]', '', kvm_m.group(1)))
+            if kvm < 1000 or kvm > 500_000:
+                continue
+            h1 = soup.find("h1")
+            name = h1.get_text(strip=True) if h1 else url.rstrip("/").split("/")[-1].replace("-", " ").title()
+            yr_m = re.search(r'(?:Bygge[åa]r|Built)[:\s]*(\d{4})', raw, re.IGNORECASE)
+            yr = int(yr_m.group(1)) if yr_m else None
+            results.append({"n": name, "by": _city(raw), "kvm": kvm, "ma": 4, "yr": yr, "s": status(yr)})
+            time.sleep(0.15)
+        except Exception:
+            pass
+
+    total_kvm = sum(r["kvm"] for r in results)
+    print(f"  Norwegian Property: {len(results)} bygg | {total_kvm:,} kvm")
+    return results if total_kvm >= MIN_KVM else []
+
+
+
+
+def scrape_storebrand():
+    print("Scraper Storebrand Eiendom...")
+    results = []
+
+    # All property data is on the listing page in format "Name / City Description sqm sqm"
+    NON_NORSK = {"stockholm", "copenhagen", "gävle", "täby", "arlanda", "sigtuna", "salem"}
+    SKIP_TYPES = ["warehouse", "shopping center", "hotel property", "retirement", "kindergarten", "school", "appartment", "hypermarket"]
+
+    try:
+        url = "https://www.storebrand.com/sam/no/asset-management/offerings/real-estate/properties-and-projects"
+        r = requests.get(url, headers=HEADERS, timeout=12, verify=False)
+        if r.status_code != 200:
+            return []
+        soup = BeautifulSoup(r.text, "lxml")
+        raw = soup.get_text(" ", strip=True)
+        raw = raw.replace('\xc2\xa0', ' ').replace('\xa0', ' ')
+
+        # Match bounded European-format number + sqm: "50.000 sqm" or "6 719 sqm"
+        # Bounded pattern avoids absorbing dates like "2020. 49 065"
+        sqm_pat = re.compile(r'([\d]{1,3}(?:[.\s][\d]{3})+|[\d]{4,6})\s*sqm', re.IGNORECASE)
+        seen = set()
+        for m in sqm_pat.finditer(raw):
+            kvm = int(re.sub(r'[^\d]', '', m.group(1)))
+            if kvm < 2000 or kvm > 300_000:
+                continue
+
+            ctx_start = max(0, m.start() - 300)
+            ctx = raw[ctx_start:m.start()]
+
+            # Extract "Name / City" pattern from context
+            nc = re.search(r'([A-ZÆØÅ][A-Za-zæøåÆØÅ0-9\s,.\-–/]+?)\s*/\s*([A-ZÆØÅ][a-zA-Zæøå]+)', ctx)
+            if not nc:
+                continue
+            prop_name = nc.group(1).strip()
+            city_raw = nc.group(2).strip()
+
+            if city_raw.lower() in NON_NORSK:
+                continue
+            if any(t in ctx.lower() for t in SKIP_TYPES):
+                continue
+
+            key = (prop_name, kvm)
+            if key in seen:
+                continue
+            seen.add(key)
+
+            yr_m = re.search(r'\b(20\d{2})\b', ctx)
+            yr = int(yr_m.group(1)) if yr_m else None
+            results.append({"n": prop_name, "by": _city(ctx + " " + city_raw), "kvm": kvm, "ma": 4, "yr": yr, "s": status(yr)})
+    except Exception:
+        pass
+
+    total_kvm = sum(r["kvm"] for r in results)
+    print(f"  Storebrand Eiendom: {len(results)} bygg | {total_kvm:,} kvm")
+    return results if total_kvm >= MIN_KVM else []
 
 
 def scrape_dnb_naeringseiendom():
@@ -421,24 +499,62 @@ def scrape_dnb_naeringseiendom():
     return results if total_kvm >= MIN_KVM else []
 
 
-def scrape_are():
-    print("Scraper Aspelin Reitan Eiendom (hardkodet)...")
-    return [
-        {"n":"VIA Vika (Ruseløkkveien 26)","by":"Oslo","kvm":62500,"ma":5,"yr":2021,"s":"snart"},
-        {"n":"Rosenholm Campus","by":"Oslo","kvm":43000,"ma":4,"yr":2018,"s":"snart"},
-        {"n":"Schweigaards gate 33+28","by":"Oslo","kvm":35000,"ma":4,"yr":2019,"s":"nå"},
-        {"n":"Vulkan (kontor/næring)","by":"Oslo","kvm":30000,"ma":4,"yr":2014,"s":"nå"},
-        {"n":"Campus Ullevål","by":"Oslo","kvm":25000,"ma":5,"yr":None,"s":"ingen"},
-        {"n":"Over Spektrum","by":"Oslo","kvm":22500,"ma":5,"yr":None,"s":"ingen"},
-        {"n":"Karvesvingen 7 (Hasle Linie)","by":"Oslo","kvm":21000,"ma":3,"yr":2022,"s":"snart"},
-        {"n":"Fr. Nansens vei 17-19","by":"Oslo","kvm":8000,"ma":4,"yr":2017,"s":"nå"},
-        {"n":"Essendrops gate 3","by":"Oslo","kvm":6000,"ma":4,"yr":2017,"s":"nå"},
-        {"n":"Trelastgården","by":"Oslo","kvm":8000,"ma":4,"yr":2023,"s":"ok"},
-        {"n":"Pressens hus","by":"Oslo","kvm":7000,"ma":4,"yr":2019,"s":"snart"},
-        {"n":"Vulkan 7-11 (Bellonahuset)","by":"Oslo","kvm":5000,"ma":4,"yr":2010,"s":"nå"},
-        {"n":"Hausmannsgate 16","by":"Oslo","kvm":4000,"ma":4,"yr":2012,"s":"nå"},
-        {"n":"Schweigaarden (Landbrukskvart.)","by":"Oslo","kvm":9500,"ma":5,"yr":None,"s":"ingen"},
-    ]
+def scrape_aspelin_reitan():
+    print("Scraper Aspelin Reitan...")
+    results = []
+    base = "https://www.aspelinreitan.no"
+    prop_links = set()
+
+    try:
+        r = requests.get(f"{base}/eiendommer/", headers=HEADERS, timeout=12, verify=False)
+        if r.status_code == 200:
+            soup = BeautifulSoup(r.text, "lxml")
+            for a in soup.find_all("a", href=True):
+                href = a["href"]
+                if "/eiendommer/" in href and "?" not in href:
+                    full = href if href.startswith("http") else base + href
+                    slug = full.rstrip("/").split("/")[-1]
+                    if slug and len(slug) > 2:
+                        prop_links.add(full)
+    except Exception:
+        pass
+
+    SKIP_TYPES = ["shopping", "hotell", "scene", "lager", "servering", "parkering"]
+
+    for url in list(prop_links)[:60]:
+        try:
+            pr = requests.get(url, headers=HEADERS, timeout=10, verify=False)
+            if pr.status_code != 200:
+                continue
+            soup = BeautifulSoup(pr.text, "lxml")
+            raw = soup.get_text(" ", strip=True)
+            if any(t in raw.lower() for t in SKIP_TYPES):
+                low = raw.lower()
+                # Only skip if type-label clearly present
+                if re.search(r'\b(?:hotell|kjøpesenter|parkeringshus)\b', low):
+                    continue
+            # Use Areal-labeled value first, then fall back to first match
+            areal_m = re.search(r'Areal[:\s]*([\d]{1,3}(?:[.\s\xa0][\d]{3})+|[\d]{3,6})\s*m[²2]', raw, re.IGNORECASE)
+            if areal_m:
+                kvm = int(re.sub(r'[^\d]', '', areal_m.group(1)))
+            else:
+                kvm_hits = re.findall(r'([\d]{1,3}(?:[.\s\xa0][\d]{3})+|[\d]{3,6})\s*m[²2]', raw, re.IGNORECASE)
+                if not kvm_hits:
+                    continue
+                kvm = int(re.sub(r'[^\d]', '', kvm_hits[0]))
+            if kvm < 1000 or kvm > 500_000:
+                continue
+            h1 = soup.find("h1")
+            name = h1.get_text(strip=True) if h1 else url.rstrip("/").split("/")[-1].replace("-", " ").title()
+            yr = _parse_year(raw)
+            results.append({"n": name, "by": _city(raw), "kvm": kvm, "ma": 4, "yr": yr, "s": status(yr)})
+            time.sleep(0.15)
+        except Exception:
+            pass
+
+    total_kvm = sum(r["kvm"] for r in results)
+    print(f"  Aspelin Reitan: {len(results)} bygg | {total_kvm:,} kvm")
+    return results if total_kvm >= MIN_KVM else []
 
 
 # ---------------------------------------------------------------------------
@@ -829,13 +945,14 @@ function filter(id, f, btn) {{
 if __name__ == "__main__":
     from signals import hent_signaler, appliser_signaler
 
-    # 1. Kjente selskaper med tilpassede scrapere
+    # 1. Kjente selskaper med tilpassede scrapere (alle live)
     known = [
-        ("nordea", "Nordea Liv",        scrape_nordea()),
-        ("klp",    "KLP Eiendom",       scrape_klp()),
-        ("are",    "Aspelin Reitan",    scrape_are()),
-        ("entra",  "Entra",            scrape_entra()),
-        ("dnb",    "DNB Næring.",      scrape_dnb_naeringseiendom()),
+        ("entra",       "Entra",              scrape_entra()),
+        ("klp",         "KLP Eiendom",        scrape_klp()),
+        ("dnb",         "DNB Næring.",        scrape_dnb_naeringseiendom()),
+        ("are",         "Aspelin Reitan",     scrape_aspelin_reitan()),
+        ("npro",        "Norwegian Property", scrape_npro()),
+        ("storebrand",  "Storebrand",         scrape_storebrand()),
     ]
 
     # 2. Automatisk oppdagelse via Brreg — kun selskaper over MIN_KVM-proxy

@@ -23,9 +23,7 @@ body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg); color: v
 .kpi-l { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.4); }
 .kpi-v { font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: white; }
 .kpi-v.gold { color: #dbb84a; }
-.tabbar { display: flex; align-items: flex-end; padding: 8px 14px 0; background: var(--bg); gap: 2px; flex-shrink: 0; overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
-.tabbar::-webkit-scrollbar { height: 4px; }
-.tabbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.tabbar { display: flex; align-items: flex-end; padding: 8px 14px 0; background: var(--bg); gap: 2px; flex-shrink: 0; overflow-x: auto; }
 .tab { height: var(--tab-h); padding: 0 16px; border: 1px solid var(--border); border-bottom: none; background: #e5e2db; color: var(--ink-2); font-size: 12px; cursor: pointer; border-radius: 3px 3px 0 0; display: flex; align-items: center; gap: 8px; user-select: none; white-space: nowrap; transition: background 0.1s; }
 .tab:hover { background: #eeebe4; }
 .tab.active { background: var(--sheet); color: var(--ink); font-weight: 500; border-bottom: 1px solid var(--sheet); z-index: 2; position: relative; }
@@ -79,20 +77,22 @@ tr.hidden { display: none; }
 <div class="topbar">
   <div class="topbar-logo">Minus<span class="topbar-updated">oppdatert 11. May 2026</span></div>
   <div class="topbar-kpis">
-    <div class="kpi"><div class="kpi-l">Brutto estimat</div><div class="kpi-v gold">NOK 871 M</div></div>
-    <div class="kpi"><div class="kpi-l">Konservativt (80%)</div><div class="kpi-v">NOK 697 M</div></div>
-    <div class="kpi"><div class="kpi-l">Selskaper</div><div class="kpi-v">5</div></div>
-    <div class="kpi"><div class="kpi-l">Bygg</div><div class="kpi-v">182</div></div>
+    <div class="kpi"><div class="kpi-l">Brutto estimat</div><div class="kpi-v gold">NOK 1014 M</div></div>
+    <div class="kpi"><div class="kpi-l">Konservativt (80%)</div><div class="kpi-v">NOK 811 M</div></div>
+    <div class="kpi"><div class="kpi-l">Selskaper</div><div class="kpi-v">6</div></div>
+    <div class="kpi"><div class="kpi-l">Bygg</div><div class="kpi-v">177</div></div>
   </div>
 </div>
 <div style="display:flex;flex-direction:column;flex:1;overflow:hidden">
   <div class="tabbar">
     <div class="tab active" onclick="switchTab('sammendrag',this)">Sammendrag</div>
-    <div class="tab" onclick="switchTab('nordea',this)">Nordea Liv <span class="tab-count">21</span></div>
-    <div class="tab" onclick="switchTab('klp',this)">KLP Eiendom <span class="tab-count">50</span></div>
-    <div class="tab" onclick="switchTab('are',this)">Aspelin Reitan <span class="tab-count">14</span></div>
+    <div class="tab active" onclick="switchTab('sammendrag',this)">Sammendrag</div>
     <div class="tab" onclick="switchTab('entra',this)">Entra <span class="tab-count">79</span></div>
+    <div class="tab" onclick="switchTab('klp',this)">KLP Eiendom <span class="tab-count">60</span></div>
     <div class="tab" onclick="switchTab('dnb',this)">DNB Næring. <span class="tab-count">18</span></div>
+    <div class="tab" onclick="switchTab('are',this)">Aspelin Reitan <span class="tab-count">7</span></div>
+    <div class="tab" onclick="switchTab('npro',this)">Norwegian Property <span class="tab-count">5</span></div>
+    <div class="tab" onclick="switchTab('storebrand',this)">Storebrand <span class="tab-count">8</span></div>
   </div>
   <div class="sheet-content">
     <div class="pane active" id="pane-sammendrag">
@@ -100,23 +100,8 @@ tr.hidden { display: none; }
         <div class="sum-grid">
           <div class="s-card big">
             <div class="s-label">Konservativt estimat (80%)</div>
-            <div class="s-value">NOK 697 M</div>
-            <div class="s-sub">5 selskaper · 182 bygg</div>
-          </div>
-          <div class="s-card">
-            <div class="s-label">Nordea Liv Eiendom</div>
-            <div class="s-value" style="font-size:20px">NOK 59 M</div>
-            <div class="s-sub">21 bygg</div>
-          </div>
-          <div class="s-card">
-            <div class="s-label">KLP Eiendom</div>
-            <div class="s-value" style="font-size:20px">NOK 289 M</div>
-            <div class="s-sub">50 bygg</div>
-          </div>
-          <div class="s-card">
-            <div class="s-label">Aspelin Reitan</div>
-            <div class="s-value" style="font-size:20px">NOK 92 M</div>
-            <div class="s-sub">14 bygg</div>
+            <div class="s-value">NOK 811 M</div>
+            <div class="s-sub">6 selskaper · 177 bygg</div>
           </div>
           <div class="s-card">
             <div class="s-label">Entra</div>
@@ -124,9 +109,29 @@ tr.hidden { display: none; }
             <div class="s-sub">79 bygg</div>
           </div>
           <div class="s-card">
-            <div class="s-label">DNB Næringseiendom</div>
+            <div class="s-label">KLP Eiendom</div>
+            <div class="s-value" style="font-size:20px">NOK 322 M</div>
+            <div class="s-sub">60 bygg</div>
+          </div>
+          <div class="s-card">
+            <div class="s-label">DNB Næring.</div>
             <div class="s-value" style="font-size:20px">NOK 74 M</div>
             <div class="s-sub">18 bygg</div>
+          </div>
+          <div class="s-card">
+            <div class="s-label">Aspelin Reitan</div>
+            <div class="s-value" style="font-size:20px">NOK 50 M</div>
+            <div class="s-sub">7 bygg</div>
+          </div>
+          <div class="s-card">
+            <div class="s-label">Norwegian Property</div>
+            <div class="s-value" style="font-size:20px">NOK 108 M</div>
+            <div class="s-sub">5 bygg</div>
+          </div>
+          <div class="s-card">
+            <div class="s-label">Storebrand</div>
+            <div class="s-value" style="font-size:20px">NOK 102 M</div>
+            <div class="s-sub">8 bygg</div>
           </div>
           <div class="s-card">
             <div class="s-label">NOK / møblert kvm</div>
@@ -139,12 +144,13 @@ tr.hidden { display: none; }
             <th>Selskap</th><th class="r">Bygg</th><th class="r">Brutto kvm</th><th class="r">Møblert kvm</th><th class="r">Brutto møbelverdi</th><th class="r">Konservativt (80%)</th>
           </tr></thead>
           <tbody>
-            <tr><td>Nordea Liv Eiendom</td><td class="r">21</td><td class="r">~208,077</td><td class="r">~8,045</td><td class="r">NOK 59 M</td><td class="r">NOK 47 M</td></tr>
-            <tr><td>KLP Eiendom</td><td class="r">50</td><td class="r">~961,742</td><td class="r">~39,243</td><td class="r">NOK 289 M</td><td class="r">NOK 231 M</td></tr>
-            <tr><td>Aspelin Reitan</td><td class="r">14</td><td class="r">~286,500</td><td class="r">~12,445</td><td class="r">NOK 92 M</td><td class="r">NOK 73 M</td></tr>
             <tr><td>Entra</td><td class="r">79</td><td class="r">~1,218,504</td><td class="r">~48,740</td><td class="r">NOK 358 M</td><td class="r">NOK 287 M</td></tr>
-            <tr><td>DNB Næringseiendom</td><td class="r">18</td><td class="r">~250,703</td><td class="r">~10,028</td><td class="r">NOK 74 M</td><td class="r">NOK 59 M</td></tr>
-            <tr><td>TOTAL</td><td class="r">182</td><td class="r">~2,925,526</td><td class="r">~118,501</td><td class="r">NOK 871 M</td><td class="r">NOK 697 M</td></tr>
+            <tr><td>KLP Eiendom</td><td class="r">60</td><td class="r">~1,095,640</td><td class="r">~43,825</td><td class="r">NOK 322 M</td><td class="r">NOK 258 M</td></tr>
+            <tr><td>DNB Næring.</td><td class="r">18</td><td class="r">~250,703</td><td class="r">~10,028</td><td class="r">NOK 74 M</td><td class="r">NOK 59 M</td></tr>
+            <tr><td>Aspelin Reitan</td><td class="r">7</td><td class="r">~169,910</td><td class="r">~6,797</td><td class="r">NOK 50 M</td><td class="r">NOK 40 M</td></tr>
+            <tr><td>Norwegian Property</td><td class="r">5</td><td class="r">~368,714</td><td class="r">~14,749</td><td class="r">NOK 108 M</td><td class="r">NOK 87 M</td></tr>
+            <tr><td>Storebrand</td><td class="r">8</td><td class="r">~345,162</td><td class="r">~13,807</td><td class="r">NOK 102 M</td><td class="r">NOK 81 M</td></tr>
+            <tr><td>TOTAL</td><td class="r">177</td><td class="r">~3,448,633</td><td class="r">~137,946</td><td class="r">NOK 1014 M</td><td class="r">NOK 811 M</td></tr>
           </tbody>
         </table>
 
@@ -152,12 +158,8 @@ tr.hidden { display: none; }
           <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px">Datakilde og metodikk</div>
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;font-size:11.5px;color:var(--ink-2);line-height:1.6">
             <div>
-              <div style="font-weight:600;color:var(--ink);margin-bottom:4px">Porteføljedata — 5 noder</div>
-              <div><span style="color:var(--ok);font-weight:600">●</span> <b>Entra</b> — live scrape, sitemap.xml daglig</div>
-              <div><span style="color:var(--ok);font-weight:600">●</span> <b>DNB Næringseiendom</b> — live scrape, leietakerdnb.no daglig</div>
-              <div><span style="color:var(--soon);font-weight:600">●</span> <b>KLP Eiendom</b> — manuelt vedlikehold</div>
-              <div><span style="color:var(--soon);font-weight:600">●</span> <b>Nordea Liv</b> — manuelt vedlikehold</div>
-              <div><span style="color:var(--soon);font-weight:600">●</span> <b>Aspelin Reitan</b> — manuelt vedlikehold</div>
+              <div style="font-weight:600;color:var(--ink);margin-bottom:4px">Porteføljedata — 6 noder</div>
+              <div><span style="color:var(--ok);font-weight:600">●</span> <b>Entra</b></div><div><span style="color:var(--ok);font-weight:600">●</span> <b>KLP Eiendom</b></div><div><span style="color:var(--ok);font-weight:600">●</span> <b>DNB Næring.</b></div><div><span style="color:var(--ok);font-weight:600">●</span> <b>Aspelin Reitan</b></div><div><span style="color:var(--ok);font-weight:600">●</span> <b>Norwegian Property</b></div><div><span style="color:var(--ok);font-weight:600">●</span> <b>Storebrand</b></div>
             </div>
             <div>
               <div style="font-weight:600;color:var(--ink);margin-bottom:4px">Innredningssignaler — 7 noder</div>
@@ -176,67 +178,12 @@ tr.hidden { display: none; }
               <div style="margin-top:8px;font-weight:600;color:var(--ink);margin-bottom:4px">Oppdateringsfrekvens</div>
               <div>Daglig kl. 04:00 UTC via GitHub Actions</div>
               <div style="margin-top:8px;font-weight:600;color:var(--ink);margin-bottom:4px">Møbelverdi-rate</div>
-              <div>NOK 7 353 / møblert kvm</div>
+              <div>NOK 7,353 / møblert kvm</div>
               <div style="font-size:10.5px;color:var(--ink-3)">(Kokstadvegen 23B ★ referanse)</div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="pane" id="pane-nordea">
-      <div class="toolbar">
-        <button class="filter-btn on" onclick="filter('nordea','all',this)">Alle</button>
-        <button class="filter-btn" onclick="filter('nordea','nå',this)">Nå</button>
-        <button class="filter-btn" onclick="filter('nordea','snart',this)">Snart</button>
-        <button class="filter-btn" onclick="filter('nordea','ok',this)">OK</button>
-        <button class="filter-btn" onclick="filter('nordea','ingen',this)">Ingen ennå</button>
-        <button class="filter-btn" onclick="filter('nordea','bergen',this)">Bergen</button>
-        <button class="filter-btn" onclick="filter('nordea','oslo',this)">Oslo</button>
-        <button class="filter-btn" onclick="filter('nordea','stavanger',this)">Stavanger</button>
-        <div class="toolbar-sum">Synlig: <b id="sum-nordea">NOK 59 M</b></div>
-      </div>
-      <div class="tbl-wrap"><table>
-        <colgroup><col style="width:36px"><col style="width:260px"><col style="width:90px"><col style="width:55px"><col style="width:85px"><col style="width:115px"><col style="width:90px"><col style="width:75px"><col style="width:95px"><col style="width:90px"></colgroup>
-        <thead><tr><th class="rn">#</th><th>Bygg</th><th class="r">Brutto kvm</th><th class="c">MA%</th><th class="r">Møblert kvm</th><th class="r">Møbelverdi</th><th class="c">Møbelalder</th><th class="c">Byggeår</th><th class="c">Status</th><th>By</th></tr></thead>
-        <tbody id="tbody-nordea"></tbody>
-      </table></div>
-    </div>
-
-    <div class="pane" id="pane-klp">
-      <div class="toolbar">
-        <button class="filter-btn on" onclick="filter('klp','all',this)">Alle</button>
-        <button class="filter-btn" onclick="filter('klp','nå',this)">Nå</button>
-        <button class="filter-btn" onclick="filter('klp','snart',this)">Snart</button>
-        <button class="filter-btn" onclick="filter('klp','ok',this)">OK</button>
-        <button class="filter-btn" onclick="filter('klp','ingen',this)">Ingen ennå</button>
-        <button class="filter-btn" onclick="filter('klp','bergen',this)">Bergen</button>
-        <button class="filter-btn" onclick="filter('klp','lysaker',this)">Lysaker</button>
-        <button class="filter-btn" onclick="filter('klp','oslo',this)">Oslo</button>
-        <button class="filter-btn" onclick="filter('klp','trondheim',this)">Trondheim</button>
-        <div class="toolbar-sum">Synlig: <b id="sum-klp">NOK 289 M</b></div>
-      </div>
-      <div class="tbl-wrap"><table>
-        <colgroup><col style="width:36px"><col style="width:260px"><col style="width:90px"><col style="width:55px"><col style="width:85px"><col style="width:115px"><col style="width:90px"><col style="width:75px"><col style="width:95px"><col style="width:90px"></colgroup>
-        <thead><tr><th class="rn">#</th><th>Bygg</th><th class="r">Brutto kvm</th><th class="c">MA%</th><th class="r">Møblert kvm</th><th class="r">Møbelverdi</th><th class="c">Møbelalder</th><th class="c">Byggeår</th><th class="c">Status</th><th>By</th></tr></thead>
-        <tbody id="tbody-klp"></tbody>
-      </table></div>
-    </div>
-
-    <div class="pane" id="pane-are">
-      <div class="toolbar">
-        <button class="filter-btn on" onclick="filter('are','all',this)">Alle</button>
-        <button class="filter-btn" onclick="filter('are','nå',this)">Nå</button>
-        <button class="filter-btn" onclick="filter('are','snart',this)">Snart</button>
-        <button class="filter-btn" onclick="filter('are','ok',this)">OK</button>
-        <button class="filter-btn" onclick="filter('are','ingen',this)">Ingen ennå</button>
-        <div class="toolbar-sum">Synlig: <b id="sum-are">NOK 92 M</b></div>
-      </div>
-      <div class="tbl-wrap"><table>
-        <colgroup><col style="width:36px"><col style="width:260px"><col style="width:90px"><col style="width:55px"><col style="width:85px"><col style="width:115px"><col style="width:90px"><col style="width:75px"><col style="width:95px"><col style="width:90px"></colgroup>
-        <thead><tr><th class="rn">#</th><th>Bygg</th><th class="r">Brutto kvm</th><th class="c">MA%</th><th class="r">Møblert kvm</th><th class="r">Møbelverdi</th><th class="c">Møbelalder</th><th class="c">Byggeår</th><th class="c">Status</th><th>By</th></tr></thead>
-        <tbody id="tbody-are"></tbody>
-      </table></div>
     </div>
 
     <div class="pane" id="pane-entra">
@@ -259,6 +206,24 @@ tr.hidden { display: none; }
       </table></div>
     </div>
 
+    <div class="pane" id="pane-klp">
+      <div class="toolbar">
+        <button class="filter-btn on" onclick="filter('klp','all',this)">Alle</button>
+        <button class="filter-btn" onclick="filter('klp','nå',this)">Nå</button>
+        <button class="filter-btn" onclick="filter('klp','snart',this)">Snart</button>
+        <button class="filter-btn" onclick="filter('klp','ok',this)">OK</button>
+        <button class="filter-btn" onclick="filter('klp','ingen',this)">Ingen ennå</button>
+        <button class="filter-btn" onclick="filter('klp','bergen',this)">Bergen</button>
+        <button class="filter-btn" onclick="filter('klp','trondheim',this)">Trondheim</button>
+        <div class="toolbar-sum">Synlig: <b id="sum-klp">NOK 322 M</b></div>
+      </div>
+      <div class="tbl-wrap"><table>
+        <colgroup><col style="width:36px"><col style="width:260px"><col style="width:90px"><col style="width:55px"><col style="width:85px"><col style="width:115px"><col style="width:90px"><col style="width:75px"><col style="width:95px"><col style="width:90px"></colgroup>
+        <thead><tr><th class="rn">#</th><th>Bygg</th><th class="r">Brutto kvm</th><th class="c">MA%</th><th class="r">Møblert kvm</th><th class="r">Møbelverdi</th><th class="c">Møbelalder</th><th class="c">Byggeår</th><th class="c">Status</th><th>By</th></tr></thead>
+        <tbody id="tbody-klp"></tbody>
+      </table></div>
+    </div>
+
     <div class="pane" id="pane-dnb">
       <div class="toolbar">
         <button class="filter-btn on" onclick="filter('dnb','all',this)">Alle</button>
@@ -277,6 +242,58 @@ tr.hidden { display: none; }
         <tbody id="tbody-dnb"></tbody>
       </table></div>
     </div>
+
+    <div class="pane" id="pane-are">
+      <div class="toolbar">
+        <button class="filter-btn on" onclick="filter('are','all',this)">Alle</button>
+        <button class="filter-btn" onclick="filter('are','nå',this)">Nå</button>
+        <button class="filter-btn" onclick="filter('are','snart',this)">Snart</button>
+        <button class="filter-btn" onclick="filter('are','ok',this)">OK</button>
+        <button class="filter-btn" onclick="filter('are','ingen',this)">Ingen ennå</button>
+        <div class="toolbar-sum">Synlig: <b id="sum-are">NOK 50 M</b></div>
+      </div>
+      <div class="tbl-wrap"><table>
+        <colgroup><col style="width:36px"><col style="width:260px"><col style="width:90px"><col style="width:55px"><col style="width:85px"><col style="width:115px"><col style="width:90px"><col style="width:75px"><col style="width:95px"><col style="width:90px"></colgroup>
+        <thead><tr><th class="rn">#</th><th>Bygg</th><th class="r">Brutto kvm</th><th class="c">MA%</th><th class="r">Møblert kvm</th><th class="r">Møbelverdi</th><th class="c">Møbelalder</th><th class="c">Byggeår</th><th class="c">Status</th><th>By</th></tr></thead>
+        <tbody id="tbody-are"></tbody>
+      </table></div>
+    </div>
+
+    <div class="pane" id="pane-npro">
+      <div class="toolbar">
+        <button class="filter-btn on" onclick="filter('npro','all',this)">Alle</button>
+        <button class="filter-btn" onclick="filter('npro','nå',this)">Nå</button>
+        <button class="filter-btn" onclick="filter('npro','snart',this)">Snart</button>
+        <button class="filter-btn" onclick="filter('npro','ok',this)">OK</button>
+        <button class="filter-btn" onclick="filter('npro','ingen',this)">Ingen ennå</button>
+        <button class="filter-btn" onclick="filter('npro','drammen',this)">Drammen</button>
+        <button class="filter-btn" onclick="filter('npro','lysaker',this)">Lysaker</button>
+        <div class="toolbar-sum">Synlig: <b id="sum-npro">NOK 108 M</b></div>
+      </div>
+      <div class="tbl-wrap"><table>
+        <colgroup><col style="width:36px"><col style="width:260px"><col style="width:90px"><col style="width:55px"><col style="width:85px"><col style="width:115px"><col style="width:90px"><col style="width:75px"><col style="width:95px"><col style="width:90px"></colgroup>
+        <thead><tr><th class="rn">#</th><th>Bygg</th><th class="r">Brutto kvm</th><th class="c">MA%</th><th class="r">Møblert kvm</th><th class="r">Møbelverdi</th><th class="c">Møbelalder</th><th class="c">Byggeår</th><th class="c">Status</th><th>By</th></tr></thead>
+        <tbody id="tbody-npro"></tbody>
+      </table></div>
+    </div>
+
+    <div class="pane" id="pane-storebrand">
+      <div class="toolbar">
+        <button class="filter-btn on" onclick="filter('storebrand','all',this)">Alle</button>
+        <button class="filter-btn" onclick="filter('storebrand','nå',this)">Nå</button>
+        <button class="filter-btn" onclick="filter('storebrand','snart',this)">Snart</button>
+        <button class="filter-btn" onclick="filter('storebrand','ok',this)">OK</button>
+        <button class="filter-btn" onclick="filter('storebrand','ingen',this)">Ingen ennå</button>
+        <button class="filter-btn" onclick="filter('storebrand','drammen',this)">Drammen</button>
+        <button class="filter-btn" onclick="filter('storebrand','oslo',this)">Oslo</button>
+        <div class="toolbar-sum">Synlig: <b id="sum-storebrand">NOK 102 M</b></div>
+      </div>
+      <div class="tbl-wrap"><table>
+        <colgroup><col style="width:36px"><col style="width:260px"><col style="width:90px"><col style="width:55px"><col style="width:85px"><col style="width:115px"><col style="width:90px"><col style="width:75px"><col style="width:95px"><col style="width:90px"></colgroup>
+        <thead><tr><th class="rn">#</th><th>Bygg</th><th class="r">Brutto kvm</th><th class="c">MA%</th><th class="r">Møblert kvm</th><th class="r">Møbelverdi</th><th class="c">Møbelalder</th><th class="c">Byggeår</th><th class="c">Status</th><th>By</th></tr></thead>
+        <tbody id="tbody-storebrand"></tbody>
+      </table></div>
+    </div>
   </div>
 </div>
 <script>
@@ -289,100 +306,6 @@ const badge = {
   ok:'<span class="badge b-ok">OK</span>',
   ingen:'<span class="badge b-ingen">Ingen ennå</span>',
 };
-
-const NORDEA = [
-  {n:'Folke Bernadottes vei 38',by:'Bergen',kvm:26094,ma:4,yr:2019,s:'nå',src:'',kilde:''},
-  {n:'Nykirkebakken 2 / Verksgata 1',by:'Bergen',kvm:19580,ma:4,yr:2018,s:'nå',src:'',kilde:''},
-  {n:'Økernveien 119-121',by:'Oslo',kvm:19325,ma:4,yr:2017,s:'nå',src:'',kilde:''},
-  {n:'Kokstadvegen 23B ★',by:'Bergen',kvm:17000,ma:4,yr:2016,s:'nå',src:'',kilde:''},
-  {n:'Fabrikkveien 36-38',by:'Stavanger',kvm:17962,ma:3,yr:2022,s:'snart',src:'',kilde:''},
-  {n:'Rådhuspassasjen',by:'Oslo',kvm:10125,ma:5,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Christian Krohgs gate 32',by:'Oslo',kvm:11300,ma:4,yr:2017,s:'nå',src:'',kilde:''},
-  {n:'Dronning Mauds gate 15',by:'Oslo',kvm:9054,ma:4,yr:2019,s:'snart',src:'',kilde:''},
-  {n:'Olav Kyrres gate 22',by:'Bergen',kvm:8965,ma:4,yr:2023,s:'ok',src:'',kilde:''},
-  {n:'Fridtjof Nansens plass 7',by:'Oslo',kvm:6835,ma:5,yr:2017,s:'nå',src:'',kilde:''},
-  {n:'Eikenga 31-33',by:'Oslo',kvm:10851,ma:3,yr:2015,s:'nå',src:'',kilde:''},
-  {n:'Allehelgens gate 4',by:'Bergen',kvm:7558,ma:4,yr:2022,s:'snart',src:'',kilde:''},
-  {n:'Havnespeilet (Sandnes)',by:'Stavanger',kvm:6370,ma:4,yr:2018,s:'nå',src:'',kilde:''},
-  {n:'Cort Adelers gate 33',by:'Oslo',kvm:6313,ma:4,yr:2017,s:'nå',src:'',kilde:''},
-  {n:'Munchs gate 5B',by:'Oslo',kvm:5214,ma:4,yr:2024,s:'ok',src:'',kilde:''},
-  {n:'Kronprinsensgate 17',by:'Oslo',kvm:5096,ma:4,yr:2017,s:'nå',src:'',kilde:''},
-  {n:'Kokstadflaten 4',by:'Bergen',kvm:4397,ma:4,yr:2025,s:'ok',src:'',kilde:''},
-  {n:'Pilestredet 12',by:'Oslo',kvm:4142,ma:4,yr:2022,s:'snart',src:'',kilde:''},
-  {n:'Valhallavegen 6',by:'Oslo',kvm:6092,ma:2,yr:2019,s:'snart',src:'',kilde:''},
-  {n:'Fabrikkveien 41',by:'Stavanger',kvm:4022,ma:3,yr:2022,s:'snart',src:'',kilde:''},
-  {n:'Henrik Ibsens gate 40-42',by:'Oslo',kvm:1782,ma:4,yr:null,s:'ingen',src:'',kilde:''}
-];
-
-const KLP = [
-  {n:'Frydenlund (Pilestredet 40-52)',by:'Oslo',kvm:82320,ma:4,yr:2010,s:'nå',src:'',kilde:''},
-  {n:'Trondheimsveien 2 (Schous)',by:'Oslo',kvm:54000,ma:4,yr:2018,s:'nå',src:'',kilde:''},
-  {n:'Drammensveien 288',by:'Lysaker',kvm:53970,ma:4,yr:2020,s:'snart',src:'',kilde:''},
-  {n:'Biskop Gunnerusgate 14',by:'Oslo',kvm:52600,ma:5,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Akersgata 55',by:'Oslo',kvm:34500,ma:4,yr:2016,s:'nå',src:'',kilde:''},
-  {n:'Ibsenkvartalet',by:'Oslo',kvm:33000,ma:4,yr:2015,s:'nå',src:'',kilde:''},
-  {n:'Stortorvet 7',by:'Oslo',kvm:32700,ma:4,yr:2023,s:'ok',src:'',kilde:''},
-  {n:'Schweigaardsgate 17-19',by:'Oslo',kvm:25000,ma:4,yr:2013,s:'nå',src:'',kilde:''},
-  {n:'Dronning Eufemiasgate 10',by:'Oslo',kvm:25800,ma:4,yr:2012,s:'nå',src:'',kilde:''},
-  {n:'Pilestredet 75C',by:'Oslo',kvm:24970,ma:4,yr:2016,s:'nå',src:'',kilde:''},
-  {n:'Holbergs Terrasse',by:'Oslo',kvm:24670,ma:4,yr:2020,s:'snart',src:'',kilde:''},
-  {n:'Eufemia (Dr. Eufemiasgate 71)',by:'Oslo',kvm:22422,ma:4,yr:2018,s:'snart',src:'',kilde:''},
-  {n:'Wergelandsveien 1-3',by:'Oslo',kvm:21360,ma:3,yr:2015,s:'nå',src:'',kilde:''},
-  {n:'Teknostallen (Teknobyen)',by:'Trondheim',kvm:36636,ma:5,yr:2024,s:'ok',src:'',kilde:''},
-  {n:'Trondheim bygg 20 186 kvm',by:'Trondheim',kvm:20186,ma:4,yr:2015,s:'nå',src:'',kilde:''},
-  {n:'Brøsetvegen 164 (Lyngården)',by:'Trondheim',kvm:19400,ma:4,yr:2015,s:'nå',src:'',kilde:''},
-  {n:'Akersgata 64/68',by:'Oslo',kvm:20500,ma:4,yr:2016,s:'nå',src:'',kilde:''},
-  {n:'Jonsvollskvartalet',by:'Bergen',kvm:19400,ma:5,yr:2020,s:'snart',src:'',kilde:''},
-  {n:'Klæbuveien 72',by:'Trondheim',kvm:17706,ma:4,yr:2017,s:'nå',src:'',kilde:''},
-  {n:'Lysaker Torg 45',by:'Lysaker',kvm:17152,ma:4,yr:2017,s:'nå',src:'',kilde:''},
-  {n:'Trondheim bygg 17 222 kvm',by:'Trondheim',kvm:17222,ma:4,yr:2015,s:'nå',src:'',kilde:''},
-  {n:'Trondheim bygg 16 562 kvm',by:'Trondheim',kvm:16562,ma:4,yr:2015,s:'nå',src:'',kilde:''},
-  {n:'Trondheim bygg 15 000 kvm',by:'Trondheim',kvm:15000,ma:4,yr:2015,s:'nå',src:'',kilde:''},
-  {n:'Schweigaardsgate 21',by:'Oslo',kvm:14827,ma:4,yr:2013,s:'nå',src:'',kilde:''},
-  {n:'Schweigaardsgate 23',by:'Oslo',kvm:15093,ma:4,yr:2013,s:'nå',src:'',kilde:''},
-  {n:'Lysaker Torg 35',by:'Lysaker',kvm:14607,ma:4,yr:2017,s:'nå',src:'',kilde:''},
-  {n:'Munkedamsveien 35',by:'Oslo',kvm:14651,ma:4,yr:2017,s:'nå',src:'',kilde:''},
-  {n:'Slemsdalsveien 37',by:'Oslo',kvm:14000,ma:4,yr:2016,s:'nå',src:'',kilde:''},
-  {n:'Trondheim bygg 13 525 kvm',by:'Trondheim',kvm:13525,ma:4,yr:2016,s:'nå',src:'',kilde:''},
-  {n:'Tempeveien 22 (MAX-bygget)',by:'Trondheim',kvm:13400,ma:4,yr:2018,s:'snart',src:'',kilde:''},
-  {n:'Trondheim bygg 12 400 kvm',by:'Trondheim',kvm:12400,ma:4,yr:2016,s:'nå',src:'',kilde:''},
-  {n:'Brynsengveien 10',by:'Oslo',kvm:12300,ma:4,yr:2016,s:'nå',src:'',kilde:''},
-  {n:'Trondheim bygg 11 706 kvm',by:'Trondheim',kvm:11706,ma:4,yr:2016,s:'nå',src:'',kilde:''},
-  {n:'Drammensveien 144',by:'Oslo',kvm:10950,ma:4,yr:2018,s:'snart',src:'',kilde:''},
-  {n:'Stensberggata 26',by:'Oslo',kvm:10600,ma:4,yr:2017,s:'nå',src:'',kilde:''},
-  {n:'Selma Ellefsens vei 8',by:'Oslo',kvm:10000,ma:3,yr:2016,s:'nå',src:'',kilde:''},
-  {n:'Citypassagen',by:'Oslo',kvm:15000,ma:4,yr:2020,s:'snart',src:'',kilde:''},
-  {n:'Holbergssgate 1',by:'Oslo',kvm:11120,ma:4,yr:2018,s:'snart',src:'',kilde:''},
-  {n:'Hansteensgate 2',by:'Oslo',kvm:9000,ma:4,yr:2018,s:'snart',src:'',kilde:''},
-  {n:'Prinsensgate 7-9',by:'Oslo',kvm:9000,ma:4,yr:2016,s:'nå',src:'',kilde:''},
-  {n:'Tjuvholmen allé 11',by:'Oslo',kvm:8200,ma:4,yr:2021,s:'snart',src:'',kilde:''},
-  {n:'Gryta 2B',by:'Trondheim',kvm:8600,ma:4,yr:2019,s:'snart',src:'',kilde:''},
-  {n:'Tjuvholmen allé 16',by:'Oslo',kvm:6544,ma:4,yr:2018,s:'snart',src:'',kilde:''},
-  {n:'Peter Egges plass 2',by:'Trondheim',kvm:7360,ma:4,yr:2010,s:'nå',src:'',kilde:''},
-  {n:'Sluppenveien 12E',by:'Trondheim',kvm:7100,ma:4,yr:2017,s:'nå',src:'',kilde:''},
-  {n:'Munkedamsveien 62 B-D',by:'Oslo',kvm:6570,ma:4,yr:2018,s:'snart',src:'',kilde:''},
-  {n:'Universitetsgata 8',by:'Oslo',kvm:5000,ma:4,yr:2018,s:'snart',src:'',kilde:''},
-  {n:'Brøsetvegen 168',by:'Trondheim',kvm:5593,ma:4,yr:2016,s:'nå',src:'',kilde:''},
-  {n:'Stensberggata 29',by:'Oslo',kvm:3270,ma:4,yr:2017,s:'nå',src:'',kilde:''},
-  {n:'Trondheim bygg 4 250 kvm',by:'Trondheim',kvm:4250,ma:4,yr:2016,s:'nå',src:'',kilde:''}
-];
-
-const ARE = [
-  {n:'VIA Vika (Ruseløkkveien 26)',by:'Oslo',kvm:62500,ma:5,yr:2021,s:'snart',src:'',kilde:''},
-  {n:'Rosenholm Campus',by:'Oslo',kvm:43000,ma:4,yr:2018,s:'snart',src:'',kilde:''},
-  {n:'Schweigaards gate 33+28',by:'Oslo',kvm:35000,ma:4,yr:2019,s:'nå',src:'',kilde:''},
-  {n:'Vulkan (kontor/næring)',by:'Oslo',kvm:30000,ma:4,yr:2014,s:'nå',src:'',kilde:''},
-  {n:'Campus Ullevål',by:'Oslo',kvm:25000,ma:5,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Over Spektrum',by:'Oslo',kvm:22500,ma:5,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Karvesvingen 7 (Hasle Linie)',by:'Oslo',kvm:21000,ma:3,yr:2022,s:'snart',src:'',kilde:''},
-  {n:'Fr. Nansens vei 17-19',by:'Oslo',kvm:8000,ma:4,yr:2017,s:'nå',src:'',kilde:''},
-  {n:'Essendrops gate 3',by:'Oslo',kvm:6000,ma:4,yr:2017,s:'nå',src:'',kilde:''},
-  {n:'Trelastgården',by:'Oslo',kvm:8000,ma:4,yr:2023,s:'ok',src:'',kilde:''},
-  {n:'Pressens hus',by:'Oslo',kvm:7000,ma:4,yr:2019,s:'snart',src:'',kilde:''},
-  {n:'Vulkan 7-11 (Bellonahuset)',by:'Oslo',kvm:5000,ma:4,yr:2010,s:'nå',src:'',kilde:''},
-  {n:'Hausmannsgate 16',by:'Oslo',kvm:4000,ma:4,yr:2012,s:'nå',src:'',kilde:''},
-  {n:'Schweigaarden (Landbrukskvart.)',by:'Oslo',kvm:9500,ma:5,yr:null,s:'ingen',src:'',kilde:''}
-];
 
 const ENTRA = [
   {n:'Observatoriegata 1 – Halvbroren og Magasinet',by:'Oslo',kvm:17430,ma:4,yr:2005,s:'nå',src:'',kilde:''},
@@ -444,8 +367,8 @@ const ENTRA = [
   {n:'Østensjøveien 39-41',by:'Oslo',kvm:5659,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Keysers gate 15',by:'Oslo',kvm:2166,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'St. Olavs plass 5',by:'Oslo',kvm:16433,ma:4,yr:1969,s:'nå',src:'',kilde:''},
-  {n:'Kristian Augusts gate 13',by:'Oslo',kvm:4101,ma:4,yr:1958,s:'nå',src:'',kilde:''},
-  {n:'Kristian Augusts gate 21',by:'Oslo',kvm:1593,ma:4,yr:1850,s:'nå',src:'',kilde:''},
+  {n:'Kristian Augusts gate 13',by:'Oslo',kvm:4101,ma:4,yr:2023,s:'ok',src:'https://mad.no/prosjekter/the-conduit-oslo/',kilde:'Mad arkitekter'},
+  {n:'Kristian Augusts gate 21',by:'Oslo',kvm:1593,ma:4,yr:2023,s:'ok',src:'https://mad.no/prosjekter/the-conduit-oslo/',kilde:'Mad arkitekter'},
   {n:'Kjørboveien 12-24 – Powerhouse Kjørbo',by:'Oslo',kvm:18392,ma:4,yr:1980,s:'nå',src:'',kilde:''},
   {n:'Grønland 58',by:'Drammen',kvm:21472,ma:4,yr:2006,s:'nå',src:'',kilde:''},
   {n:'Brynsveien 5',by:'Oslo',kvm:6127,ma:4,yr:null,s:'ingen',src:'',kilde:''},
@@ -455,15 +378,78 @@ const ENTRA = [
   {n:'Universitetsgata 1-9',by:'Oslo',kvm:22076,ma:4,yr:2021,s:'snart',src:'',kilde:''},
   {n:'Allehelgensgate 6',by:'Bergen',kvm:14104,ma:4,yr:1965,s:'nå',src:'',kilde:''},
   {n:'Lagårdsveien 6',by:'Stavanger',kvm:16996,ma:4,yr:2009,s:'nå',src:'',kilde:''},
-  {n:'Kristian Augusts gate 15-17 – Domus Juridica',by:'Oslo',kvm:21156,ma:4,yr:2019,s:'snart',src:'',kilde:''},
+  {n:'Kristian Augusts gate 15-17 – Domus Juridica',by:'Oslo',kvm:21156,ma:4,yr:2023,s:'ok',src:'https://mad.no/prosjekter/the-conduit-oslo/',kilde:'Mad arkitekter'},
   {n:'Kjørboveien 33',by:'Oslo',kvm:14676,ma:4,yr:1985,s:'nå',src:'',kilde:''},
-  {n:'Vestfjordgaten 4 – Sentrale og attraktive kontorer tett på Sandvikselva',by:'Oslo',kvm:23765,ma:4,yr:2010,s:'nå',src:'',kilde:''},
+  {n:'Vestfjordgaten 4 – Sentrale og attraktive kontorer tett på Sandvikselva',by:'Oslo',kvm:23765,ma:4,yr:2023,s:'ok',src:'https://mad.no/prosjekter/the-conduit-oslo/',kilde:'Mad arkitekter'},
   {n:'Nils Hansens vei 20',by:'Oslo',kvm:3149,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Østensjøveien 43',by:'Oslo',kvm:6823,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Kjørboveien 3 – Parkeringshuset ved Kjørboparken',by:'Oslo',kvm:16353,ma:4,yr:1987,s:'nå',src:'',kilde:''},
   {n:'Kjørboveien 27-29',by:'Oslo',kvm:7576,ma:4,yr:1985,s:'nå',src:'',kilde:''},
   {n:'Kjørboveien 11',by:'Oslo',kvm:1340,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Kreftings gate 33',by:'Drammen',kvm:3890,ma:4,yr:null,s:'ingen',src:'',kilde:''}
+];
+
+const KLP = [
+  {n:'Wergelandsveien 1 3',by:'Trondheim',kvm:21360,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Haakon Vii S Gate 6',by:'Trondheim',kvm:4000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Ranheimsveien 10',by:'Trondheim',kvm:17743,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Klaebuveien 72',by:'Trondheim',kvm:11706,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Gryta 4',by:'Trondheim',kvm:16562,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Lysaker Torg 45',by:'Trondheim',kvm:17152,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Stensberggata 29',by:'Trondheim',kvm:3270,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Drammensveien 144',by:'Trondheim',kvm:10950,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Jonsvollskvartalet',by:'Bergen',kvm:19400,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Abels Gate 5',by:'Trondheim',kvm:12400,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Pilestredet 75c',by:'Trondheim',kvm:24970,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Universitetsgata 8',by:'Trondheim',kvm:5000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Beddingen 6 8 10',by:'Trondheim',kvm:36636,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Schweigaardsgate 23',by:'Trondheim',kvm:15093,ma:4,yr:2013,s:'nå',src:'',kilde:''},
+  {n:'Prinsensgate 7-9',by:'Trondheim',kvm:9000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Brosetvegen 164',by:'Trondheim',kvm:13525,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Paleet',by:'Trondheim',kvm:27954,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Maxbygget',by:'Trondheim',kvm:4250,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Dronning Eufemiasgate 10',by:'Trondheim',kvm:25800,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Ostre Rosten 8',by:'Trondheim',kvm:20186,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Drammensveien 288',by:'Trondheim',kvm:53970,ma:4,yr:1991,s:'nå',src:'',kilde:''},
+  {n:'Tjuvholmen Alle 11',by:'Trondheim',kvm:8200,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Ranheimsveien 9',by:'Trondheim',kvm:12500,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Schweigaardsgate 21',by:'Trondheim',kvm:14827,ma:4,yr:2013,s:'nå',src:'',kilde:''},
+  {n:'Leangen Alle 4',by:'Trondheim',kvm:9200,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Brynsengveien 10',by:'Trondheim',kvm:12300,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Brosetvegen 168',by:'Trondheim',kvm:5593,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Lysaker Torg 35',by:'Trondheim',kvm:14607,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Gryta 2A',by:'Trondheim',kvm:868,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Pilestredet 40-52',by:'Trondheim',kvm:82320,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Prof Brochs Gt 2',by:'Trondheim',kvm:13400,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Ferjemannsveien 10',by:'Trondheim',kvm:17222,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Hansteensgate 2',by:'Trondheim',kvm:9000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Pilestredet 38',by:'Trondheim',kvm:1290,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Sluppen 12Bc',by:'Trondheim',kvm:6811,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Peter Egges Plass 2',by:'Trondheim',kvm:7360,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Schous Bryggeri',by:'Trondheim',kvm:54000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Dronning Eufemiasgate 71',by:'Trondheim',kvm:22422,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Byporten',by:'Trondheim',kvm:41128,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Schweigaardsgate 17 19',by:'Trondheim',kvm:25000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Holbergssgate 1',by:'Trondheim',kvm:11120,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Selma Ellefsens vei 8',by:'Trondheim',kvm:10000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Gryta 2B',by:'Trondheim',kvm:2560,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Citypassagen',by:'Trondheim',kvm:13000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Stensberggata 26',by:'Trondheim',kvm:10600,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'C.J Hambrosplass 2',by:'Trondheim',kvm:33000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Abels%20Gate%209',by:'Trondheim',kvm:15300,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Zander Kaaes Gate 9',by:'Bergen',kvm:15000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Holbergs Terrasse',by:'Trondheim',kvm:24670,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Stortorvet 7',by:'Trondheim',kvm:32700,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Akersgata 55',by:'Trondheim',kvm:34500,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Biskop Gunnerusgate 14 B',by:'Trondheim',kvm:52600,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Akersgata 64 68',by:'Trondheim',kvm:20500,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Dybdahlsgarden',by:'Trondheim',kvm:8600,ma:4,yr:2021,s:'snart',src:'',kilde:''},
+  {n:'Erling Skakkes Gt 42',by:'Trondheim',kvm:12550,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Slemsdalsveien 37',by:'Trondheim',kvm:14000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Tjuvholmen allé 16',by:'Trondheim',kvm:6544,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Munkedamsveien 35',by:'Trondheim',kvm:14651,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Sluppenveien 12E',by:'Trondheim',kvm:7100,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Glasmagasinet',by:'Trondheim',kvm:27670,ma:4,yr:null,s:'ingen',src:'',kilde:''}
 ];
 
 const DNB = [
@@ -485,6 +471,35 @@ const DNB = [
   {n:'Starvhusgaten 2 B',by:'Bergen',kvm:4032,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Strandgaten 17',by:'Bergen',kvm:10024,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Sandslihaugen 30 ISB',by:'Bergen',kvm:5891,ma:4,yr:null,s:'ingen',src:'',kilde:''}
+];
+
+const ARE = [
+  {n:'Alf Bjerckes vei 22',by:'Oslo',kvm:29000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Vulkan 7–11',by:'Oslo',kvm:3417,ma:4,yr:2010,s:'nå',src:'',kilde:''},
+  {n:'Hausmannsgate 16',by:'Oslo',kvm:9993,ma:4,yr:2004,s:'nå',src:'',kilde:''},
+  {n:'Rosenholm Campus',by:'Oslo',kvm:43400,ma:4,yr:1986,s:'nå',src:'',kilde:''},
+  {n:'Alf Bjerckes vei 26',by:'Oslo',kvm:28600,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Sven Oftedals vei 10',by:'Oslo',kvm:37000,ma:4,yr:1973,s:'nå',src:'',kilde:''},
+  {n:'Hans Møller Gasmanns vei 7',by:'Oslo',kvm:18500,ma:4,yr:2024,s:'ok',src:'',kilde:''}
+];
+
+const NPRO = [
+  {n:'Telegrafen',by:'Drammen',kvm:25467,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Verkstedhallene',by:'Drammen',kvm:30275,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Martin Linges vei 33',by:'Lysaker',kvm:88492,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'SnarÃ¸yveien 30',by:'Lysaker',kvm:200000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Terminalbygget',by:'Drammen',kvm:24480,ma:4,yr:null,s:'ingen',src:'',kilde:''}
+];
+
+const STOREBRAND = [
+  {n:'Office spaces Our office spaces are centrally located in urban areas with promising growth outlooks. Explore a few highlights below. Highlighed properties Storebrand Life Insurance Via Vika',by:'Oslo',kvm:50000,ma:4,yr:2023,s:'ok',src:'https://mad.no/prosjekter/the-conduit-oslo/',kilde:'Mad arkitekter'},
+  {n:'Highlighed properties Storebrand Life Insurance Via Vika',by:'Drammen',kvm:6719,ma:4,yr:2021,s:'snart',src:'',kilde:''},
+  {n:'Premium location in Oslo CBD 50.000 sqm',by:'Drammen',kvm:29657,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Nordics. 6 719 sqm',by:'Oslo',kvm:59478,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'CBD. 29 657 sqm',by:'Oslo',kvm:49065,ma:4,yr:2020,s:'snart',src:'',kilde:''},
+  {n:'Below are three development projects that we are especially proud of. Highlighed properties Storebrand Real Estate Norway Grev Wedels plass 9',by:'Oslo',kvm:28265,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Real Estate Norway Grev Wedels plass 9',by:'Oslo',kvm:62500,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'In progress Storebrand Life Insurance Via Vika',by:'Oslo',kvm:59478,ma:4,yr:null,s:'ingen',src:'',kilde:''}
 ];
 
 function renderTable(id, data) {
@@ -515,11 +530,12 @@ function renderTable(id, data) {
   tbody.innerHTML = html;
 }
 
-renderTable('nordea', NORDEA);
-renderTable('klp', KLP);
-renderTable('are', ARE);
 renderTable('entra', ENTRA);
+renderTable('klp', KLP);
 renderTable('dnb', DNB);
+renderTable('are', ARE);
+renderTable('npro', NPRO);
+renderTable('storebrand', STOREBRAND);
 
 function switchTab(id, el) {
   document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
