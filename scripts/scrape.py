@@ -136,54 +136,76 @@ def finn_hjemmeside(orgnr, navn):
 # Generisk website-scraper
 # ---------------------------------------------------------------------------
 
+PROP_KEYWORDS = [
+    "eiendom", "bygg", "propert", "portfolio", "utleie", "kontor",
+    "lokaler", "ledig", "leie", "næringsbygg", "kontorbygg",
+]
+
 def scrape_nettsted(navn, url, min_kvm=MIN_KVM):
     """
     Forsøker å hente bygg, kvm og byggeår fra et eiendomsselskaps nettsted.
-    Returnerer liste med bygg-dicts, eller tom liste hvis ikke nok data.
+    Prøver sitemap.xml først, deretter lenker fra forsiden.
     """
     if not url:
         return []
-    try:
-        r = requests.get(url, headers=HEADERS, timeout=10, verify=False)
-        soup = BeautifulSoup(r.text, "lxml")
-        raw = soup.get_text()
+    base = "/".join(url.split("/")[:3])
 
-        # Finn alle interne lenker som kan være eiendomssider
-        base = "/".join(url.split("/")[:3])
-        prop_links = list(set([
-            (base + a["href"]) if a["href"].startswith("/") else a["href"]
-            for a in soup.find_all("a", href=True)
-            if any(k in a["href"].lower() for k in ["eiendom", "bygg", "propert", "portfolio"])
-            and "http" in (a["href"] if a["href"].startswith("http") else base + a["href"])
-        ]))
+    prop_links = set()
 
-        results = []
-        for link in prop_links[:30]:
-            try:
-                pr = requests.get(link, headers=HEADERS, timeout=10, verify=False)
-                psoup = BeautifulSoup(pr.text, "lxml")
-                praw = psoup.get_text()
+    # 1. Prøv sitemap.xml
+    for sitemap_url in [base + "/sitemap.xml", base + "/sitemap_index.xml"]:
+        try:
+            sr = requests.get(sitemap_url, headers=HEADERS, timeout=8, verify=False)
+            if sr.status_code == 200 and "<loc>" in sr.text:
+                locs = re.findall(r"<loc>([^<]+)</loc>", sr.text)
+                for loc in locs:
+                    if any(k in loc.lower() for k in PROP_KEYWORDS):
+                        prop_links.add(loc)
+                if prop_links:
+                    break
+        except Exception:
+            pass
 
-                kvm = _parse_kvm(praw)
-                yr = _parse_year(praw)
-                if not kvm or kvm < 500:
-                    continue
+    # 2. Fallback: skann forsiden for interne lenker
+    if not prop_links:
+        try:
+            r = requests.get(url, headers=HEADERS, timeout=10, verify=False)
+            soup = BeautifulSoup(r.text, "lxml")
+            for a in soup.find_all("a", href=True):
+                href = a["href"]
+                full = (base + href) if href.startswith("/") else href
+                if full.startswith(base) and any(k in full.lower() for k in PROP_KEYWORDS):
+                    prop_links.add(full)
+        except Exception:
+            pass
 
-                h1 = psoup.find("h1")
-                pnavn = h1.get_text(strip=True).split(":")[0][:80] if h1 else link.split("/")[-1]
-                by = _city_from_text(praw)
+    results = []
+    for link in list(prop_links)[:40]:
+        try:
+            pr = requests.get(link, headers=HEADERS, timeout=10, verify=False)
+            if pr.status_code != 200:
+                continue
+            psoup = BeautifulSoup(pr.text, "lxml")
+            praw = psoup.get_text(" ", strip=True)
 
-                results.append({"n": pnavn, "by": by, "kvm": kvm, "ma": 4, "yr": yr, "s": status(yr)})
-                time.sleep(0.15)
-            except Exception:
-                pass
+            kvm = _parse_kvm(praw)
+            yr = _parse_year(praw)
+            if not kvm or kvm < 500:
+                continue
 
-        total_kvm = sum(r["kvm"] for r in results)
-        if total_kvm < min_kvm:
-            return []
-        return results
-    except Exception:
+            h1 = psoup.find("h1")
+            pnavn = h1.get_text(strip=True).split(":")[0][:80] if h1 else link.split("/")[-2] or navn
+            by = _city_from_text(praw)
+
+            results.append({"n": pnavn, "by": by, "kvm": kvm, "ma": 4, "yr": yr, "s": status(yr)})
+            time.sleep(0.15)
+        except Exception:
+            pass
+
+    total_kvm = sum(r["kvm"] for r in results)
+    if total_kvm < min_kvm:
         return []
+    return results
 
 
 # ---------------------------------------------------------------------------

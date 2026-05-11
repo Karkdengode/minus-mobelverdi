@@ -2,7 +2,7 @@ name: Scrape og oppdater
 
 on:
   schedule:
-    - cron: '0 4 * * 1'  # Hver mandag kl. 04:00 UTC
+    - cron: '0 4 * * *'  # Hver dag kl. 04:00 UTC
   workflow_dispatch:      # Kan også kjøres manuelt
 
 jobs:
