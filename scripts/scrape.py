@@ -32,60 +32,85 @@ EIENDOM_KODER = ["68.100", "68.201", "68.209", "68.320"]
 
 def brreg_finn_kandidater(min_omsetning=MIN_OMSETNING_NOK, maks_kandidater=50):
     """
-    Henter eiendomsselskaper fra Brreg og filtrerer på omsetning fra
-    Regnskapsregisteret som proxy for porteføljestørrelse.
-    Returnerer liste med {navn, orgnr, omsetning, hjemmeside}.
+    Henter de største eiendomsselskapene via Regnskapsregisteret direkte —
+    sortert på omsetning, maks 5 sider per næringskode (500 selskaper totalt).
+    Mye raskere enn å laste alle 10 000 og sjekke ett for ett.
     """
     print("Søker i Brreg etter store eiendomsselskaper...")
     kandidater = {}
 
+    # Hent topp-selskaper fra Regnskapsregisteret sortert på driftsinntekter
     for kode in EIENDOM_KODER:
-        side = 0
-        while True:
+        for side in range(5):  # Maks 500 per næringskode
             try:
                 r = requests.get(
-                    "https://data.brreg.no/enhetsregisteret/api/enheter",
-                    params={"naeringskode": kode, "size": 100, "page": side},
+                    "https://data.brreg.no/regnskapsregisteret/regnskap",
+                    params={
+                        "naeringskode": kode,
+                        "regnskapstype": "SELSKAP",
+                        "år": THIS_YEAR - 1,
+                        "size": 100,
+                        "page": side,
+                        "sort": "resultatregnskapResultat.driftsresultat.driftsinntekter.sumDriftsinntekter,desc",
+                    },
                     headers={"Accept": "application/json"},
-                    timeout=10,
+                    timeout=12,
                 )
                 if r.status_code != 200:
                     break
                 data = r.json()
-                enheter = data.get("_embedded", {}).get("enheter", [])
-                if not enheter:
+                regnskaper = data if isinstance(data, list) else data.get("_embedded", {}).get("regnskaper", [])
+                if not regnskaper:
                     break
 
-                for e in enheter:
-                    orgnr = e.get("organisasjonsnummer")
-                    if orgnr and orgnr not in kandidater:
-                        kandidater[orgnr] = {
-                            "navn": e.get("navn", ""),
-                            "orgnr": orgnr,
-                            "hjemmeside": e.get("hjemmeside") or "",
-                        }
+                for reg in regnskaper:
+                    orgnr = reg.get("virksomhet", {}).get("organisasjonsnummer")
+                    navn = reg.get("virksomhet", {}).get("navn", "")
+                    omsetning = (reg.get("resultatregnskapResultat", {})
+                                 .get("driftsresultat", {})
+                                 .get("driftsinntekter", {})
+                                 .get("sumDriftsinntekter"))
+                    hjemmeside = reg.get("virksomhet", {}).get("hjemmeside") or ""
+                    if orgnr and omsetning and omsetning >= min_omsetning:
+                        if orgnr not in kandidater or omsetning > kandidater[orgnr]["omsetning"]:
+                            kandidater[orgnr] = {
+                                "navn": navn, "orgnr": orgnr,
+                                "omsetning": omsetning, "hjemmeside": hjemmeside,
+                            }
 
-                # Stopp hvis vi har nok
-                if data.get("page", {}).get("totalPages", 1) <= side + 1:
+                if len(kandidater) >= maks_kandidater * 3:
                     break
-                side += 1
                 time.sleep(0.1)
             except Exception:
                 break
 
-    print(f"  Fant {len(kandidater)} selskaper totalt — filtrerer på omsetning ≥ {min_omsetning/1e6:.0f} MNOK")
+    # Fallback: hvis Regnskapsregisteret-sortering ikke virker, bruk gammel metode men begrenset
+    if not kandidater:
+        for kode in EIENDOM_KODER:
+            try:
+                r = requests.get(
+                    "https://data.brreg.no/enhetsregisteret/api/enheter",
+                    params={"naeringskode": kode, "size": 100, "page": 0},
+                    headers={"Accept": "application/json"},
+                    timeout=10,
+                )
+                if r.status_code == 200:
+                    for e in r.json().get("_embedded", {}).get("enheter", []):
+                        orgnr = e.get("organisasjonsnummer")
+                        if orgnr and orgnr not in kandidater:
+                            omsetning = _hent_omsetning(orgnr)
+                            if omsetning and omsetning >= min_omsetning:
+                                kandidater[orgnr] = {
+                                    "navn": e.get("navn", ""), "orgnr": orgnr,
+                                    "omsetning": omsetning,
+                                    "hjemmeside": e.get("hjemmeside") or "",
+                                }
+                        time.sleep(0.05)
+            except Exception:
+                pass
 
-    # Filtrer via Regnskapsregisteret
-    store = []
-    for orgnr, info in list(kandidater.items()):
-        omsetning = _hent_omsetning(orgnr)
-        if omsetning and omsetning >= min_omsetning:
-            info["omsetning"] = omsetning
-            store.append(info)
-        time.sleep(0.05)
-
-    store.sort(key=lambda x: x["omsetning"], reverse=True)
-    print(f"  {len(store)} selskaper over terskel")
+    store = sorted(kandidater.values(), key=lambda x: x["omsetning"], reverse=True)
+    print(f"  {len(store)} selskaper over {min_omsetning/1e6:.0f} MNOK terskel")
     return store[:maks_kandidater]
 
 

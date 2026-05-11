@@ -77,10 +77,10 @@ tr.hidden { display: none; }
 <div class="topbar">
   <div class="topbar-logo">Minus<span class="topbar-updated">oppdatert 11. May 2026</span></div>
   <div class="topbar-kpis">
-    <div class="kpi"><div class="kpi-l">Brutto estimat</div><div class="kpi-v gold">NOK 798 M</div></div>
-    <div class="kpi"><div class="kpi-l">Konservativt (80%)</div><div class="kpi-v">NOK 638 M</div></div>
-    <div class="kpi"><div class="kpi-l">Selskaper</div><div class="kpi-v">4</div></div>
-    <div class="kpi"><div class="kpi-l">Bygg</div><div class="kpi-v">164</div></div>
+    <div class="kpi"><div class="kpi-l">Brutto estimat</div><div class="kpi-v gold">NOK 871 M</div></div>
+    <div class="kpi"><div class="kpi-l">Konservativt (80%)</div><div class="kpi-v">NOK 697 M</div></div>
+    <div class="kpi"><div class="kpi-l">Selskaper</div><div class="kpi-v">5</div></div>
+    <div class="kpi"><div class="kpi-l">Bygg</div><div class="kpi-v">182</div></div>
   </div>
 </div>
 <div style="display:flex;flex-direction:column;flex:1;overflow:hidden">
@@ -91,6 +91,7 @@ tr.hidden { display: none; }
     <div class="tab" onclick="switchTab('klp',this)">KLP Eiendom <span class="tab-count">50</span></div>
     <div class="tab" onclick="switchTab('are',this)">Aspelin Reitan <span class="tab-count">14</span></div>
     <div class="tab" onclick="switchTab('entra',this)">Entra <span class="tab-count">79</span></div>
+    <div class="tab" onclick="switchTab('dnb',this)">DNB Næringseiendom <span class="tab-count">18</span></div>
   </div>
   <div class="sheet-content">
     <div class="pane active" id="pane-sammendrag">
@@ -98,8 +99,8 @@ tr.hidden { display: none; }
         <div class="sum-grid">
           <div class="s-card big">
             <div class="s-label">Konservativt estimat (80%)</div>
-            <div class="s-value">NOK 638 M</div>
-            <div class="s-sub">4 selskaper · 164 bygg</div>
+            <div class="s-value">NOK 697 M</div>
+            <div class="s-sub">5 selskaper · 182 bygg</div>
           </div>
           <div class="s-card">
             <div class="s-label">Nordea Liv Eiendom</div>
@@ -122,6 +123,11 @@ tr.hidden { display: none; }
             <div class="s-sub">79 bygg</div>
           </div>
           <div class="s-card">
+            <div class="s-label">DNB Næringseiendom</div>
+            <div class="s-value" style="font-size:20px">NOK 74 M</div>
+            <div class="s-sub">18 bygg</div>
+          </div>
+          <div class="s-card">
             <div class="s-label">NOK / møblert kvm</div>
             <div class="s-value" style="font-size:20px">7 353</div>
             <div class="s-sub">Kokstadvegen 23B ★ · referanserate</div>
@@ -136,7 +142,8 @@ tr.hidden { display: none; }
             <tr><td>KLP Eiendom</td><td class="r">50</td><td class="r">~961,742</td><td class="r">~39,243</td><td class="r">NOK 289 M</td><td class="r">NOK 231 M</td></tr>
             <tr><td>Aspelin Reitan</td><td class="r">14</td><td class="r">~286,500</td><td class="r">~12,445</td><td class="r">NOK 92 M</td><td class="r">NOK 73 M</td></tr>
             <tr><td>Entra</td><td class="r">79</td><td class="r">~1,218,504</td><td class="r">~48,740</td><td class="r">NOK 358 M</td><td class="r">NOK 287 M</td></tr>
-            <tr><td>TOTAL</td><td class="r">164</td><td class="r">~2,674,823</td><td class="r">~108,473</td><td class="r">NOK 798 M</td><td class="r">NOK 638 M</td></tr>
+            <tr><td>DNB Næringseiendom</td><td class="r">18</td><td class="r">~250,703</td><td class="r">~10,028</td><td class="r">NOK 74 M</td><td class="r">NOK 59 M</td></tr>
+            <tr><td>TOTAL</td><td class="r">182</td><td class="r">~2,925,526</td><td class="r">~118,501</td><td class="r">NOK 871 M</td><td class="r">NOK 697 M</td></tr>
           </tbody>
         </table>
       </div>
@@ -214,6 +221,25 @@ tr.hidden { display: none; }
         <colgroup><col style="width:36px"><col style="width:260px"><col style="width:90px"><col style="width:55px"><col style="width:85px"><col style="width:115px"><col style="width:90px"><col style="width:75px"><col style="width:95px"><col style="width:90px"></colgroup>
         <thead><tr><th class="rn">#</th><th>Bygg</th><th class="r">Brutto kvm</th><th class="c">MA%</th><th class="r">Møblert kvm</th><th class="r">Møbelverdi</th><th class="c">Møbelalder</th><th class="c">Byggeår</th><th class="c">Status</th><th>By</th></tr></thead>
         <tbody id="tbody-entra"></tbody>
+      </table></div>
+    </div>
+
+    <div class="pane" id="pane-dnb">
+      <div class="toolbar">
+        <button class="filter-btn on" onclick="filter('dnb','all',this)">Alle</button>
+        <button class="filter-btn" onclick="filter('dnb','nå',this)">Nå</button>
+        <button class="filter-btn" onclick="filter('dnb','snart',this)">Snart</button>
+        <button class="filter-btn" onclick="filter('dnb','ok',this)">OK</button>
+        <button class="filter-btn" onclick="filter('dnb','ingen',this)">Ingen ennå</button>
+        <button class="filter-btn" onclick="filter('dnb','bergen',this)">Bergen</button>
+        <button class="filter-btn" onclick="filter('dnb','oslo',this)">Oslo</button>
+        <button class="filter-btn" onclick="filter('dnb','trondheim',this)">Trondheim</button>
+        <div class="toolbar-sum">Synlig: <b id="sum-dnb">NOK 74 M</b></div>
+      </div>
+      <div class="tbl-wrap"><table>
+        <colgroup><col style="width:36px"><col style="width:260px"><col style="width:90px"><col style="width:55px"><col style="width:85px"><col style="width:115px"><col style="width:90px"><col style="width:75px"><col style="width:95px"><col style="width:90px"></colgroup>
+        <thead><tr><th class="rn">#</th><th>Bygg</th><th class="r">Brutto kvm</th><th class="c">MA%</th><th class="r">Møblert kvm</th><th class="r">Møbelverdi</th><th class="c">Møbelalder</th><th class="c">Byggeår</th><th class="c">Status</th><th>By</th></tr></thead>
+        <tbody id="tbody-dnb"></tbody>
       </table></div>
     </div>
   </div>
@@ -405,6 +431,27 @@ const ENTRA = [
   {n:'Kreftings gate 33',by:'Drammen',kvm:3890,ma:4,yr:null,s:'ingen',src:'',kilde:''}
 ];
 
+const DNB = [
+  {n:'Vitaminveien 1',by:'Oslo',kvm:20000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Sirkeltomten II AS',by:'Trondheim',kvm:21122,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Beddingen 16',by:'Trondheim',kvm:24883,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Vitaminveien 4',by:'Oslo',kvm:22209,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Stortingsgata 22',by:'Oslo',kvm:6188,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Roald Amunsensgate 6',by:'Oslo',kvm:5887,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Fjordalleen 16',by:'Oslo',kvm:7523,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Dronning Eufemiasgt. 30',by:'Oslo',kvm:49169,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Dronning Eufemiasgt. 28',by:'Oslo',kvm:12803,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Dronning Eufemiasgt. 32',by:'Oslo',kvm:17862,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Akerselva Atrium',by:'Oslo',kvm:17273,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Krinkelkroken 1 AS',by:'Bergen',kvm:9897,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Markeveien 1B',by:'Bergen',kvm:7168,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Rosenkrantzgaten 12',by:'Bergen',kvm:6158,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Starvhusgaten 2 A',by:'Bergen',kvm:2614,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Starvhusgaten 2 B',by:'Bergen',kvm:4032,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Strandgaten 17',by:'Bergen',kvm:10024,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Sandslihaugen 30 ISB',by:'Bergen',kvm:5891,ma:4,yr:null,s:'ingen',src:'',kilde:''}
+];
+
 function renderTable(id, data) {
   data.sort((a,b) => (b.kvm*b.ma/100 - a.kvm*a.ma/100));
   const tbody = document.getElementById('tbody-'+id);
@@ -437,6 +484,7 @@ renderTable('nordea', NORDEA);
 renderTable('klp', KLP);
 renderTable('are', ARE);
 renderTable('entra', ENTRA);
+renderTable('dnb', DNB);
 
 function switchTab(id, el) {
   document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
