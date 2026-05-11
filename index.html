@@ -23,7 +23,9 @@ body { font-family: 'IBM Plex Sans', sans-serif; background: var(--bg); color: v
 .kpi-l { font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: rgba(255,255,255,0.4); }
 .kpi-v { font-family: 'IBM Plex Mono', monospace; font-size: 14px; color: white; }
 .kpi-v.gold { color: #dbb84a; }
-.tabbar { display: flex; align-items: flex-end; padding: 8px 14px 0; background: var(--bg); gap: 2px; flex-shrink: 0; overflow-x: auto; }
+.tabbar { display: flex; align-items: flex-end; padding: 8px 14px 0; background: var(--bg); gap: 2px; flex-shrink: 0; overflow-x: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.tabbar::-webkit-scrollbar { height: 4px; }
+.tabbar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 .tab { height: var(--tab-h); padding: 0 16px; border: 1px solid var(--border); border-bottom: none; background: #e5e2db; color: var(--ink-2); font-size: 12px; cursor: pointer; border-radius: 3px 3px 0 0; display: flex; align-items: center; gap: 8px; user-select: none; white-space: nowrap; transition: background 0.1s; }
 .tab:hover { background: #eeebe4; }
 .tab.active { background: var(--sheet); color: var(--ink); font-weight: 500; border-bottom: 1px solid var(--sheet); z-index: 2; position: relative; }
@@ -86,12 +88,11 @@ tr.hidden { display: none; }
 <div style="display:flex;flex-direction:column;flex:1;overflow:hidden">
   <div class="tabbar">
     <div class="tab active" onclick="switchTab('sammendrag',this)">Sammendrag</div>
-    <div class="tab active" onclick="switchTab('sammendrag',this)">Sammendrag</div>
-    <div class="tab" onclick="switchTab('nordea',this)">Nordea Liv Eiendom <span class="tab-count">21</span></div>
+    <div class="tab" onclick="switchTab('nordea',this)">Nordea Liv <span class="tab-count">21</span></div>
     <div class="tab" onclick="switchTab('klp',this)">KLP Eiendom <span class="tab-count">50</span></div>
     <div class="tab" onclick="switchTab('are',this)">Aspelin Reitan <span class="tab-count">14</span></div>
     <div class="tab" onclick="switchTab('entra',this)">Entra <span class="tab-count">79</span></div>
-    <div class="tab" onclick="switchTab('dnb',this)">DNB Næringseiendom <span class="tab-count">18</span></div>
+    <div class="tab" onclick="switchTab('dnb',this)">DNB Næring. <span class="tab-count">18</span></div>
   </div>
   <div class="sheet-content">
     <div class="pane active" id="pane-sammendrag">

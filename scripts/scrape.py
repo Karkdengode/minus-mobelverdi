@@ -798,11 +798,11 @@ if __name__ == "__main__":
 
     # 1. Kjente selskaper med tilpassede scrapere
     known = [
-        ("nordea", "Nordea Liv Eiendom",   scrape_nordea()),
-        ("klp",    "KLP Eiendom",          scrape_klp()),
-        ("are",    "Aspelin Reitan",       scrape_are()),
-        ("entra",  "Entra",               scrape_entra()),
-        ("dnb",    "DNB Næringseiendom",  scrape_dnb_naeringseiendom()),
+        ("nordea", "Nordea Liv",        scrape_nordea()),
+        ("klp",    "KLP Eiendom",       scrape_klp()),
+        ("are",    "Aspelin Reitan",    scrape_are()),
+        ("entra",  "Entra",            scrape_entra()),
+        ("dnb",    "DNB Næring.",      scrape_dnb_naeringseiendom()),
     ]
 
     # 2. Automatisk oppdagelse via Brreg — kun selskaper over MIN_KVM-proxy
