@@ -711,6 +711,39 @@ tr.hidden {{ display: none; }}
 {summary_table_rows()}
           </tbody>
         </table>
+
+        <div style="margin-top:28px;border-top:1px solid var(--border);padding-top:20px">
+          <div style="font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink-3);margin-bottom:14px">Datakilde og metodikk</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;font-size:11.5px;color:var(--ink-2);line-height:1.6">
+            <div>
+              <div style="font-weight:600;color:var(--ink);margin-bottom:4px">Porteføljedata — {len(companies)} noder</div>
+              {''.join(
+                f'<div><span style="color:var(--ok);font-weight:600">●</span> <b>{label}</b></div>'
+                for _, label, _ in companies
+              )}
+            </div>
+            <div>
+              <div style="font-weight:600;color:var(--ink);margin-bottom:4px">Innredningssignaler — 7 noder</div>
+              <div><span style="color:var(--ok);font-weight:600">●</span> Metropolis arkitekter</div>
+              <div><span style="color:var(--ok);font-weight:600">●</span> Scenario interiørarkitekter</div>
+              <div><span style="color:var(--ok);font-weight:600">●</span> Sane interiørarkitekter</div>
+              <div><span style="color:var(--ok);font-weight:600">●</span> Mad arkitekter</div>
+              <div><span style="color:var(--ok);font-weight:600">●</span> Norconsult</div>
+              <div><span style="color:var(--ok);font-weight:600">●</span> Snøhetta</div>
+              <div><span style="color:var(--ok);font-weight:600">●</span> Asplan Viak</div>
+            </div>
+            <div>
+              <div style="font-weight:600;color:var(--ink);margin-bottom:4px">Auto-oppdagelse</div>
+              <div><span style="color:var(--ok);font-weight:600">●</span> Brreg enhetsregisteret</div>
+              <div><span style="color:var(--ok);font-weight:600">●</span> Regnskapsregisteret (omsetning som kvm-proxy)</div>
+              <div style="margin-top:8px;font-weight:600;color:var(--ink);margin-bottom:4px">Oppdateringsfrekvens</div>
+              <div>Daglig kl. 04:00 UTC via GitHub Actions</div>
+              <div style="margin-top:8px;font-weight:600;color:var(--ink);margin-bottom:4px">Møbelverdi-rate</div>
+              <div>NOK {RATE:,} / møblert kvm</div>
+              <div style="font-size:10.5px;color:var(--ink-3)">(Kokstadvegen 23B ★ referanse)</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 {panes()}
