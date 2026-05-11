@@ -383,6 +383,35 @@ def scrape_npro():
 
 
 
+def scrape_nordea():
+    # Nordea Liv har ingen offentlig porteføljeside som lar seg scrape — beholder
+    # som referansedata. Dette er den eneste hardkodede kilden.
+    print("Scraper Nordea Liv Eiendom (statisk referansedata)...")
+    return [
+        {"n":"Folke Bernadottes vei 38","by":"Bergen","kvm":26094,"ma":4,"yr":2019,"s":"nå"},
+        {"n":"Nykirkebakken 2 / Verksgata 1","by":"Bergen","kvm":19580,"ma":4,"yr":2018,"s":"nå"},
+        {"n":"Økernveien 119-121","by":"Oslo","kvm":19325,"ma":4,"yr":2017,"s":"nå"},
+        {"n":"Kokstadvegen 23B ★","by":"Bergen","kvm":17000,"ma":4,"yr":2016,"s":"nå"},
+        {"n":"Fabrikkveien 36-38","by":"Stavanger","kvm":17962,"ma":3,"yr":2022,"s":"snart"},
+        {"n":"Rådhuspassasjen","by":"Oslo","kvm":10125,"ma":5,"yr":None,"s":"ingen"},
+        {"n":"Christian Krohgs gate 32","by":"Oslo","kvm":11300,"ma":4,"yr":2017,"s":"nå"},
+        {"n":"Dronning Mauds gate 15","by":"Oslo","kvm":9054,"ma":4,"yr":2019,"s":"snart"},
+        {"n":"Olav Kyrres gate 22","by":"Bergen","kvm":8965,"ma":4,"yr":2023,"s":"ok"},
+        {"n":"Fridtjof Nansens plass 7","by":"Oslo","kvm":6835,"ma":5,"yr":2017,"s":"nå"},
+        {"n":"Eikenga 31-33","by":"Oslo","kvm":10851,"ma":3,"yr":2015,"s":"nå"},
+        {"n":"Allehelgens gate 4","by":"Bergen","kvm":7558,"ma":4,"yr":2022,"s":"snart"},
+        {"n":"Havnespeilet (Sandnes)","by":"Stavanger","kvm":6370,"ma":4,"yr":2018,"s":"nå"},
+        {"n":"Cort Adelers gate 33","by":"Oslo","kvm":6313,"ma":4,"yr":2017,"s":"nå"},
+        {"n":"Munchs gate 5B","by":"Oslo","kvm":5214,"ma":4,"yr":2024,"s":"ok"},
+        {"n":"Kronprinsensgate 17","by":"Oslo","kvm":5096,"ma":4,"yr":2017,"s":"nå"},
+        {"n":"Kokstadflaten 4","by":"Bergen","kvm":4397,"ma":4,"yr":2025,"s":"ok"},
+        {"n":"Pilestredet 12","by":"Oslo","kvm":4142,"ma":4,"yr":2022,"s":"snart"},
+        {"n":"Valhallavegen 6","by":"Oslo","kvm":6092,"ma":2,"yr":2019,"s":"snart"},
+        {"n":"Fabrikkveien 41","by":"Stavanger","kvm":4022,"ma":3,"yr":2022,"s":"snart"},
+        {"n":"Henrik Ibsens gate 40-42","by":"Oslo","kvm":1782,"ma":4,"yr":None,"s":"ingen"},
+    ]
+
+
 def scrape_storebrand():
     print("Scraper Storebrand Eiendom...")
     results = []
@@ -628,7 +657,8 @@ def summary(data):
 # Bygg HTML
 # ---------------------------------------------------------------------------
 
-def build_html(companies):
+def build_html(companies, signal_firms=None):
+    signal_firms = signal_firms or []
     total_bygg = sum(len(d) for _, _, d in companies)
     total_brutto = sum(summary(d)[2] for _, _, d in companies)
     total_konservativt = round(total_brutto * 0.8)
@@ -839,19 +869,17 @@ tr.hidden {{ display: none; }}
               )}
             </div>
             <div>
-              <div style="font-weight:600;color:var(--ink);margin-bottom:4px">Innredningssignaler — 7 noder</div>
-              <div><span style="color:var(--ok);font-weight:600">●</span> Metropolis arkitekter</div>
-              <div><span style="color:var(--ok);font-weight:600">●</span> Scenario interiørarkitekter</div>
-              <div><span style="color:var(--ok);font-weight:600">●</span> Sane interiørarkitekter</div>
-              <div><span style="color:var(--ok);font-weight:600">●</span> Mad arkitekter</div>
-              <div><span style="color:var(--ok);font-weight:600">●</span> Norconsult</div>
-              <div><span style="color:var(--ok);font-weight:600">●</span> Snøhetta</div>
-              <div><span style="color:var(--ok);font-weight:600">●</span> Asplan Viak</div>
+              <div style="font-weight:600;color:var(--ink);margin-bottom:4px">Innredningssignaler — {len(signal_firms)} noder</div>
+              {''.join(
+                f'<div><span style="color:var(--ok);font-weight:600">●</span> {firm}</div>'
+                for firm in signal_firms
+              )}
             </div>
             <div>
               <div style="font-weight:600;color:var(--ink);margin-bottom:4px">Auto-oppdagelse</div>
               <div><span style="color:var(--ok);font-weight:600">●</span> Brreg enhetsregisteret</div>
               <div><span style="color:var(--ok);font-weight:600">●</span> Regnskapsregisteret (omsetning som kvm-proxy)</div>
+              <div><span style="color:var(--ok);font-weight:600">●</span> Estate Media — 250 største (referanse)</div>
               <div style="margin-top:8px;font-weight:600;color:var(--ink);margin-bottom:4px">Oppdateringsfrekvens</div>
               <div>Daglig kl. 04:00 UTC via GitHub Actions</div>
               <div style="margin-top:8px;font-weight:600;color:var(--ink);margin-bottom:4px">Møbelverdi-rate</div>
@@ -943,16 +971,17 @@ function filter(id, f, btn) {{
 # ---------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    from signals import hent_signaler, appliser_signaler
+    from signals import hent_signaler, appliser_signaler, FIRMAER
 
-    # 1. Kjente selskaper med tilpassede scrapere (alle live)
+    # 1. Kjente selskaper med tilpassede scrapere (alle live unntatt nordea)
     known = [
         ("entra",       "Entra",              scrape_entra()),
         ("klp",         "KLP Eiendom",        scrape_klp()),
         ("dnb",         "DNB Næring.",        scrape_dnb_naeringseiendom()),
-        ("are",         "Aspelin Reitan",     scrape_aspelin_reitan()),
-        ("npro",        "Norwegian Property", scrape_npro()),
         ("storebrand",  "Storebrand",         scrape_storebrand()),
+        ("npro",        "Norwegian Property", scrape_npro()),
+        ("are",         "Aspelin Ramm",       scrape_aspelin_reitan()),
+        ("nordea",      "Nordea Liv",         scrape_nordea()),
     ]
 
     # 2. Automatisk oppdagelse via Brreg — kun selskaper over MIN_KVM-proxy
@@ -1000,8 +1029,9 @@ if __name__ == "__main__":
     companies = companies_med_signaler
     print(f"  {total_oppdatert} bygg fikk oppdatert møbelstatus fra signaler")
 
-    # 4. Bygg og lagre HTML
-    html = build_html(companies)
+    # 4. Bygg og lagre HTML — signalfirmaer hentes dynamisk fra signals.FIRMAER
+    signal_firms = [f["navn"] for f in FIRMAER]
+    html = build_html(companies, signal_firms=signal_firms)
     out = Path(__file__).parent.parent / "index.html"
     out.write_text(html, encoding="utf-8")
 
