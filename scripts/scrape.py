@@ -315,6 +315,65 @@ def scrape_nordea():
     ]
 
 
+def scrape_dnb_naeringseiendom():
+    print("Scraper DNB Næringseiendom (leietakerdnb.no)...")
+    results = []
+
+    for page in range(1, 10):
+        url = ("https://leietakerdnb.no/eiendommer/" if page == 1
+               else f"https://leietakerdnb.no/eiendommer/page/{page}/")
+        try:
+            r = requests.get(url, headers=HEADERS, timeout=12, verify=False)
+            if r.status_code != 200:
+                break
+            soup = BeautifulSoup(r.text, "lxml")
+            items = soup.find_all(class_="property_listing")
+            if not items:
+                break
+
+            for item in items:
+                h2 = item.find("h2", class_="grid_title")
+                name = h2.get_text(strip=True) if h2 else None
+                if not name:
+                    continue
+
+                city = None
+                ptype = None
+                kvm = None
+                for div in item.find_all("div", class_="property_location_image"):
+                    for a in div.find_all("a"):
+                        href = a.get("href", "")
+                        text = a.get_text(strip=True)
+                        label = a.get("aria-label", "")
+                        if "grid_property_area" in href:
+                            city = text
+                        elif "grid_property_type" in href:
+                            ptype = text
+                        elif label == "kvm":
+                            try:
+                                kvm = int(re.sub(r"[^\d]", "", text.split("+")[0]))
+                            except Exception:
+                                pass
+
+                if ptype and ptype.lower() != "kontor":
+                    continue
+                if not kvm or kvm < 500:
+                    continue
+
+                results.append({
+                    "n": name, "by": city or "Oslo",
+                    "kvm": kvm, "ma": 4, "yr": None, "s": status(None),
+                })
+
+            time.sleep(0.3)
+        except Exception:
+            break
+
+    total_kvm = sum(r["kvm"] for r in results)
+    print(f"  DNB Næringseiendom: {len(results)} kontorbygg | {total_kvm:,} kvm")
+    return results if total_kvm >= MIN_KVM else []
+
+
 def scrape_are():
     print("Scraper Aspelin Reitan Eiendom (hardkodet)...")
     return [
@@ -692,10 +751,11 @@ if __name__ == "__main__":
 
     # 1. Kjente selskaper med tilpassede scrapere
     known = [
-        ("nordea", "Nordea Liv Eiendom", scrape_nordea()),
-        ("klp",    "KLP Eiendom",        scrape_klp()),
-        ("are",    "Aspelin Reitan",     scrape_are()),
-        ("entra",  "Entra",              scrape_entra()),
+        ("nordea", "Nordea Liv Eiendom",   scrape_nordea()),
+        ("klp",    "KLP Eiendom",          scrape_klp()),
+        ("are",    "Aspelin Reitan",       scrape_are()),
+        ("entra",  "Entra",               scrape_entra()),
+        ("dnb",    "DNB Næringseiendom",  scrape_dnb_naeringseiendom()),
     ]
 
     # 2. Automatisk oppdagelse via Brreg — kun selskaper over MIN_KVM-proxy

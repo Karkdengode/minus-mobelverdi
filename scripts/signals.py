@@ -57,12 +57,19 @@ ADRESSE_TREFF = [
     # Aspelin Reitan
     "Ruseløkkveien 26", "Rosenholm", "Karvesvingen",
     "Vulkan", "Hausmannsgate 16",
+    # DNB Næringseiendom
+    "Vitaminveien 1", "Vitaminveien 4",
+    "Dronning Eufemias gate 28", "Dronning Eufemias gate 30", "Dronning Eufemias gate 32",
+    "Akerselva Atrium", "Stortingsgata 22", "Fjordalléen 16",
+    "Roald Amundsens gate 6", "Beddingen 16", "Sirkeltomten",
+    "Krinkelkroken 1", "Strandgaten 17", "Rosenkrantzgaten 12",
+    "Starvhusgaten", "Markeveien 1", "Sandslihaugen 30",
 ]
 
 SELSKAP_TREFF = [
     "Entra", "KLP Eiendom", "KLP", "Nordea Liv",
     "Aspelin Reitan", "Norwegian Property", "NPRO",
-    "Storebrand Eiendom", "DNB Eiendom",
+    "Storebrand Eiendom", "DNB Næringseiendom", "DNB Eiendom",
 ]
 
 # ---------------------------------------------------------------------------
