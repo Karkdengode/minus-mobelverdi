@@ -148,14 +148,28 @@ FIRMAER = [
 # ---------------------------------------------------------------------------
 
 def _match_bygg(text):
-    """Returnerer første adresse- eller selskapsstreng som matcher porteføljen."""
+    """
+    Returnerer (adresse, selskap) kun ved sterke treff:
+    - Selskap alene er nok (selskapsnavn er unike nok)
+    - Adresse krever at selskapsnavn også er til stede (hindrer falske adressetreff)
+    """
+    found_adr = None
     for adr in ADRESSE_TREFF:
         if adr.lower() in text.lower():
-            return adr, None
+            found_adr = adr
+            break
+
+    found_sel = None
     for sel in SELSKAP_TREFF:
         if re.search(r'\b' + re.escape(sel) + r'\b', text, re.IGNORECASE):
-            return None, sel
-    return None, None
+            found_sel = sel
+            break
+
+    if found_adr and found_sel:
+        return found_adr, found_sel   # Sterkest mulig treff
+    if found_sel:
+        return None, found_sel        # Selskapsnavn alene holder
+    return None, None                 # Adresse uten selskap — for usikkert
 
 
 def _extract_year(text, felt):
