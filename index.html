@@ -75,12 +75,12 @@ tr.hidden { display: none; }
 </head>
 <body>
 <div class="topbar">
-  <div class="topbar-logo">Minus<span class="topbar-updated">oppdatert 7. June 2026</span></div>
+  <div class="topbar-logo">Minus<span class="topbar-updated">oppdatert 8. June 2026</span></div>
   <div class="topbar-kpis">
-    <div class="kpi"><div class="kpi-l">Brutto estimat</div><div class="kpi-v gold">NOK 898 M</div></div>
-    <div class="kpi"><div class="kpi-l">Konservativt (80%)</div><div class="kpi-v">NOK 719 M</div></div>
+    <div class="kpi"><div class="kpi-l">Brutto estimat</div><div class="kpi-v gold">NOK 1000 M</div></div>
+    <div class="kpi"><div class="kpi-l">Konservativt (80%)</div><div class="kpi-v">NOK 800 M</div></div>
     <div class="kpi"><div class="kpi-l">Selskaper</div><div class="kpi-v">7</div></div>
-    <div class="kpi"><div class="kpi-l">Bygg</div><div class="kpi-v">172</div></div>
+    <div class="kpi"><div class="kpi-l">Bygg</div><div class="kpi-v">180</div></div>
   </div>
 </div>
 <div style="display:flex;flex-direction:column;flex:1;overflow:hidden">
@@ -90,7 +90,7 @@ tr.hidden { display: none; }
     <div class="tab" onclick="switchTab('entra',this)">Entra <span class="tab-count">79</span></div>
     <div class="tab" onclick="switchTab('klp',this)">KLP Eiendom <span class="tab-count">60</span></div>
     <div class="tab" onclick="switchTab('dnb',this)">DNB Næring. <span class="tab-count">0</span></div>
-    <div class="tab" onclick="switchTab('storebrand',this)">Storebrand <span class="tab-count">0</span></div>
+    <div class="tab" onclick="switchTab('storebrand',this)">Storebrand <span class="tab-count">8</span></div>
     <div class="tab" onclick="switchTab('npro',this)">Norwegian Property <span class="tab-count">5</span></div>
     <div class="tab" onclick="switchTab('are',this)">Aspelin Ramm <span class="tab-count">7</span></div>
     <div class="tab" onclick="switchTab('nordea',this)">Nordea Liv <span class="tab-count">21</span></div>
@@ -101,8 +101,8 @@ tr.hidden { display: none; }
         <div class="sum-grid">
           <div class="s-card big">
             <div class="s-label">Konservativt estimat (80%)</div>
-            <div class="s-value">NOK 719 M</div>
-            <div class="s-sub">7 selskaper · 172 bygg</div>
+            <div class="s-value">NOK 800 M</div>
+            <div class="s-sub">7 selskaper · 180 bygg</div>
           </div>
           <div class="s-card">
             <div class="s-label">Entra</div>
@@ -121,8 +121,8 @@ tr.hidden { display: none; }
           </div>
           <div class="s-card">
             <div class="s-label">Storebrand</div>
-            <div class="s-value" style="font-size:20px">NOK 0 M</div>
-            <div class="s-sub">0 bygg</div>
+            <div class="s-value" style="font-size:20px">NOK 102 M</div>
+            <div class="s-sub">8 bygg</div>
           </div>
           <div class="s-card">
             <div class="s-label">Norwegian Property</div>
@@ -153,11 +153,11 @@ tr.hidden { display: none; }
             <tr><td>Entra</td><td class="r">79</td><td class="r">~1,218,504</td><td class="r">~48,740</td><td class="r">NOK 358 M</td><td class="r">NOK 287 M</td></tr>
             <tr><td>KLP Eiendom</td><td class="r">60</td><td class="r">~1,095,640</td><td class="r">~43,825</td><td class="r">NOK 322 M</td><td class="r">NOK 258 M</td></tr>
             <tr><td>DNB Næring.</td><td class="r">0</td><td class="r">~0</td><td class="r">~0</td><td class="r">NOK 0 M</td><td class="r">NOK 0 M</td></tr>
-            <tr><td>Storebrand</td><td class="r">0</td><td class="r">~0</td><td class="r">~0</td><td class="r">NOK 0 M</td><td class="r">NOK 0 M</td></tr>
+            <tr><td>Storebrand</td><td class="r">8</td><td class="r">~345,162</td><td class="r">~13,807</td><td class="r">NOK 102 M</td><td class="r">NOK 81 M</td></tr>
             <tr><td>Norwegian Property</td><td class="r">5</td><td class="r">~368,714</td><td class="r">~14,749</td><td class="r">NOK 108 M</td><td class="r">NOK 87 M</td></tr>
             <tr><td>Aspelin Ramm</td><td class="r">7</td><td class="r">~169,910</td><td class="r">~6,797</td><td class="r">NOK 50 M</td><td class="r">NOK 40 M</td></tr>
             <tr><td>Nordea Liv</td><td class="r">21</td><td class="r">~208,077</td><td class="r">~8,045</td><td class="r">NOK 59 M</td><td class="r">NOK 47 M</td></tr>
-            <tr><td>TOTAL</td><td class="r">172</td><td class="r">~3,060,845</td><td class="r">~122,156</td><td class="r">NOK 898 M</td><td class="r">NOK 719 M</td></tr>
+            <tr><td>TOTAL</td><td class="r">180</td><td class="r">~3,406,007</td><td class="r">~135,963</td><td class="r">NOK 1000 M</td><td class="r">NOK 800 M</td></tr>
           </tbody>
         </table>
 
@@ -249,7 +249,9 @@ tr.hidden { display: none; }
         <button class="filter-btn" onclick="filter('storebrand','snart',this)">Snart</button>
         <button class="filter-btn" onclick="filter('storebrand','ok',this)">OK</button>
         <button class="filter-btn" onclick="filter('storebrand','ingen',this)">Ingen ennå</button>
-        <div class="toolbar-sum">Synlig: <b id="sum-storebrand">NOK 0 M</b></div>
+        <button class="filter-btn" onclick="filter('storebrand','drammen',this)">Drammen</button>
+        <button class="filter-btn" onclick="filter('storebrand','oslo',this)">Oslo</button>
+        <div class="toolbar-sum">Synlig: <b id="sum-storebrand">NOK 102 M</b></div>
       </div>
       <div class="tbl-wrap"><table>
         <colgroup><col style="width:36px"><col style="width:260px"><col style="width:90px"><col style="width:55px"><col style="width:85px"><col style="width:115px"><col style="width:90px"><col style="width:75px"><col style="width:95px"><col style="width:90px"></colgroup>
@@ -383,8 +385,8 @@ const ENTRA = [
   {n:'Østensjøveien 39-41',by:'Oslo',kvm:5659,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Keysers gate 15',by:'Oslo',kvm:2166,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'St. Olavs plass 5',by:'Oslo',kvm:16433,ma:4,yr:1969,s:'nå',src:'',kilde:''},
-  {n:'Kristian Augusts gate 13',by:'Oslo',kvm:4101,ma:4,yr:1958,s:'nå',src:'',kilde:''},
-  {n:'Kristian Augusts gate 21',by:'Oslo',kvm:1593,ma:4,yr:1850,s:'nå',src:'',kilde:''},
+  {n:'Kristian Augusts gate 13',by:'Oslo',kvm:4101,ma:4,yr:2023,s:'ok',src:'https://mad.no/prosjekter/the-conduit-oslo/',kilde:'Mad arkitekter'},
+  {n:'Kristian Augusts gate 21',by:'Oslo',kvm:1593,ma:4,yr:2023,s:'ok',src:'https://mad.no/prosjekter/the-conduit-oslo/',kilde:'Mad arkitekter'},
   {n:'Kjørboveien 12-24 – Powerhouse Kjørbo',by:'Oslo',kvm:18392,ma:4,yr:1980,s:'nå',src:'',kilde:''},
   {n:'Grønland 58',by:'Drammen',kvm:21472,ma:4,yr:2006,s:'nå',src:'',kilde:''},
   {n:'Brynsveien 5',by:'Oslo',kvm:6127,ma:4,yr:null,s:'ingen',src:'',kilde:''},
@@ -394,7 +396,7 @@ const ENTRA = [
   {n:'Universitetsgata 1-9',by:'Oslo',kvm:22076,ma:4,yr:2021,s:'snart',src:'',kilde:''},
   {n:'Allehelgensgate 6',by:'Bergen',kvm:14104,ma:4,yr:1965,s:'nå',src:'',kilde:''},
   {n:'Lagårdsveien 6',by:'Stavanger',kvm:16996,ma:4,yr:2009,s:'nå',src:'',kilde:''},
-  {n:'Kristian Augusts gate 15-17 – Domus Juridica',by:'Oslo',kvm:21156,ma:4,yr:2019,s:'snart',src:'',kilde:''},
+  {n:'Kristian Augusts gate 15-17 – Domus Juridica',by:'Oslo',kvm:21156,ma:4,yr:2023,s:'ok',src:'https://mad.no/prosjekter/the-conduit-oslo/',kilde:'Mad arkitekter'},
   {n:'Kjørboveien 33',by:'Oslo',kvm:14676,ma:4,yr:1985,s:'nå',src:'',kilde:''},
   {n:'Vestfjordgaten 4 – Sentrale og attraktive kontorer tett på Sandvikselva',by:'Oslo',kvm:23765,ma:4,yr:2026,s:'ok',src:'https://www.snohetta.com/projects/powerhouse-brattorkaia',kilde:'Snøhetta'},
   {n:'Nils Hansens vei 20',by:'Oslo',kvm:3149,ma:4,yr:null,s:'ingen',src:'',kilde:''},
@@ -406,66 +408,66 @@ const ENTRA = [
 ];
 
 const KLP = [
-  {n:'Holbergs Terrasse',by:'Trondheim',kvm:24670,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Stortorvet 7',by:'Trondheim',kvm:32700,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Gryta 2B',by:'Trondheim',kvm:2560,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Lysaker Torg 45',by:'Trondheim',kvm:17152,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Citypassagen',by:'Trondheim',kvm:13000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Stensberggata 26',by:'Trondheim',kvm:10600,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Lysaker Torg 35',by:'Trondheim',kvm:14607,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Leangen Alle 4',by:'Trondheim',kvm:9200,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Sluppenveien 12E',by:'Trondheim',kvm:7100,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Munkedamsveien 35',by:'Trondheim',kvm:14651,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Peter Egges Plass 2',by:'Trondheim',kvm:7360,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'C.J Hambrosplass 2',by:'Trondheim',kvm:33000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Pilestredet 75c',by:'Trondheim',kvm:24970,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Prinsensgate 7-9',by:'Trondheim',kvm:9000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Schous Bryggeri',by:'Trondheim',kvm:54000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Prof Brochs Gt 2',by:'Trondheim',kvm:13400,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Holbergssgate 1',by:'Trondheim',kvm:11120,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Drammensveien 144',by:'Trondheim',kvm:10950,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Stensberggata 29',by:'Trondheim',kvm:3270,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Ranheimsveien 9',by:'Trondheim',kvm:12500,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Brynsengveien 10',by:'Trondheim',kvm:12300,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Brosetvegen 164',by:'Trondheim',kvm:13525,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Pilestredet 40-52',by:'Trondheim',kvm:82320,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Wergelandsveien 1 3',by:'Trondheim',kvm:21360,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Abels%20Gate%209',by:'Trondheim',kvm:15300,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Brosetvegen 168',by:'Trondheim',kvm:5593,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Dronning Eufemiasgate 10',by:'Trondheim',kvm:25800,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Akersgata 64 68',by:'Trondheim',kvm:20500,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Schweigaardsgate 17 19',by:'Trondheim',kvm:25000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Glasmagasinet',by:'Trondheim',kvm:27670,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Universitetsgata 8',by:'Trondheim',kvm:5000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Schweigaardsgate 23',by:'Trondheim',kvm:15093,ma:4,yr:2013,s:'nå',src:'',kilde:''},
+  {n:'Maxbygget',by:'Trondheim',kvm:4250,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Sluppenveien 12E',by:'Trondheim',kvm:7100,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Leangen Alle 4',by:'Trondheim',kvm:9200,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Pilestredet 75c',by:'Trondheim',kvm:24970,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Gryta 2A',by:'Trondheim',kvm:868,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Tjuvholmen Alle 11',by:'Trondheim',kvm:8200,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Gryta 2B',by:'Trondheim',kvm:2560,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Gryta 4',by:'Trondheim',kvm:16562,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Erling Skakkes Gt 42',by:'Trondheim',kvm:12550,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Byporten',by:'Trondheim',kvm:41128,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Brynsengveien 10',by:'Trondheim',kvm:12300,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Universitetsgata 8',by:'Trondheim',kvm:5000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Dybdahlsgarden',by:'Trondheim',kvm:8600,ma:4,yr:2021,s:'snart',src:'',kilde:''},
+  {n:'Ferjemannsveien 10',by:'Trondheim',kvm:17222,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Dronning Eufemiasgate 71',by:'Trondheim',kvm:22422,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Haakon Vii S Gate 6',by:'Trondheim',kvm:4000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Pilestredet 38',by:'Trondheim',kvm:1290,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Selma Ellefsens vei 8',by:'Trondheim',kvm:10000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Ranheimsveien 10',by:'Trondheim',kvm:17743,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Holbergssgate 1',by:'Trondheim',kvm:11120,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Peter Egges Plass 2',by:'Trondheim',kvm:7360,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Dronning Eufemiasgate 10',by:'Trondheim',kvm:25800,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Pilestredet 40-52',by:'Trondheim',kvm:82320,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Stensberggata 29',by:'Trondheim',kvm:3270,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Wergelandsveien 1 3',by:'Trondheim',kvm:21360,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Abels Gate 5',by:'Trondheim',kvm:12400,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Beddingen 6 8 10',by:'Trondheim',kvm:36636,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Paleet',by:'Trondheim',kvm:27954,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Akersgata 64 68',by:'Trondheim',kvm:20500,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Stortorvet 7',by:'Trondheim',kvm:32700,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Brosetvegen 164',by:'Trondheim',kvm:13525,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Schous Bryggeri',by:'Trondheim',kvm:54000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Lysaker Torg 45',by:'Trondheim',kvm:17152,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Zander Kaaes Gate 9',by:'Bergen',kvm:15000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Drammensveien 144',by:'Trondheim',kvm:10950,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Brosetvegen 168',by:'Trondheim',kvm:5593,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Abels%20Gate%209',by:'Trondheim',kvm:15300,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Ostre Rosten 8',by:'Trondheim',kvm:20186,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'C.J Hambrosplass 2',by:'Trondheim',kvm:33000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Holbergs Terrasse',by:'Trondheim',kvm:24670,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Schweigaardsgate 23',by:'Trondheim',kvm:15093,ma:4,yr:2013,s:'nå',src:'',kilde:''},
+  {n:'Slemsdalsveien 37',by:'Trondheim',kvm:14000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Sluppen 12Bc',by:'Trondheim',kvm:6811,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Schweigaardsgate 21',by:'Trondheim',kvm:14827,ma:4,yr:2013,s:'nå',src:'',kilde:''},
   {n:'Tjuvholmen allé 16',by:'Trondheim',kvm:6544,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Abels Gate 5',by:'Trondheim',kvm:12400,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Citypassagen',by:'Trondheim',kvm:13000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Stensberggata 26',by:'Trondheim',kvm:10600,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Jonsvollskvartalet',by:'Bergen',kvm:19400,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Sluppen 12Bc',by:'Trondheim',kvm:6811,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Slemsdalsveien 37',by:'Trondheim',kvm:14000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Hansteensgate 2',by:'Trondheim',kvm:9000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Ostre Rosten 8',by:'Trondheim',kvm:20186,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Beddingen 6 8 10',by:'Trondheim',kvm:36636,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Gryta 2A',by:'Trondheim',kvm:868,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Schweigaardsgate 17 19',by:'Trondheim',kvm:25000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Dronning Eufemiasgate 71',by:'Trondheim',kvm:22422,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Erling Skakkes Gt 42',by:'Trondheim',kvm:12550,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Akersgata 55',by:'Trondheim',kvm:34500,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Gryta 4',by:'Trondheim',kvm:16562,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Maxbygget',by:'Trondheim',kvm:4250,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Byporten',by:'Trondheim',kvm:41128,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Ferjemannsveien 10',by:'Trondheim',kvm:17222,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Paleet',by:'Trondheim',kvm:27954,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Dybdahlsgarden',by:'Trondheim',kvm:8600,ma:4,yr:2021,s:'snart',src:'',kilde:''},
+  {n:'Prof Brochs Gt 2',by:'Trondheim',kvm:13400,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Klaebuveien 72',by:'Trondheim',kvm:11706,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Zander Kaaes Gate 9',by:'Bergen',kvm:15000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Ranheimsveien 9',by:'Trondheim',kvm:12500,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Selma Ellefsens vei 8',by:'Trondheim',kvm:10000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Prinsensgate 7-9',by:'Trondheim',kvm:9000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Hansteensgate 2',by:'Trondheim',kvm:9000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Drammensveien 288',by:'Trondheim',kvm:53970,ma:4,yr:1991,s:'nå',src:'',kilde:''},
   {n:'Biskop Gunnerusgate 14 B',by:'Trondheim',kvm:52600,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Drammensveien 288',by:'Trondheim',kvm:53970,ma:4,yr:1991,s:'nå',src:'',kilde:''}
+  {n:'Akersgata 55',by:'Trondheim',kvm:34500,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Ranheimsveien 10',by:'Trondheim',kvm:17743,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Lysaker Torg 35',by:'Trondheim',kvm:14607,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Munkedamsveien 35',by:'Trondheim',kvm:14651,ma:4,yr:null,s:'ingen',src:'',kilde:''}
 ];
 
 const DNB = [
@@ -473,25 +475,32 @@ const DNB = [
 ];
 
 const STOREBRAND = [
-
+  {n:'Office spaces Our office spaces are centrally located in urban areas with promising growth outlooks. Explore a few highlights below. Highlighed properties Storebrand Life Insurance Via Vika',by:'Oslo',kvm:50000,ma:4,yr:2026,s:'ok',src:'https://www.snohetta.com/projects/powerhouse-brattorkaia',kilde:'Snøhetta'},
+  {n:'Highlighed properties Storebrand Life Insurance Via Vika',by:'Drammen',kvm:6719,ma:4,yr:2021,s:'snart',src:'',kilde:''},
+  {n:'Premium location in Oslo CBD 50.000 sqm',by:'Drammen',kvm:29657,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Nordics. 6 719 sqm',by:'Oslo',kvm:59478,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'CBD. 29 657 sqm',by:'Oslo',kvm:49065,ma:4,yr:2020,s:'snart',src:'',kilde:''},
+  {n:'Below are three development projects that we are especially proud of. Highlighed properties Storebrand Real Estate Norway Grev Wedels plass 9',by:'Oslo',kvm:28265,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Real Estate Norway Grev Wedels plass 9',by:'Oslo',kvm:62500,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'In progress Storebrand Life Insurance Via Vika',by:'Oslo',kvm:59478,ma:4,yr:null,s:'ingen',src:'',kilde:''}
 ];
 
 const NPRO = [
   {n:'Telegrafen',by:'Drammen',kvm:25467,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Martin Linges vei 33',by:'Lysaker',kvm:88492,ma:4,yr:null,s:'ingen',src:'',kilde:''},
-  {n:'Terminalbygget',by:'Drammen',kvm:24480,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'SnarÃ¸yveien 30',by:'Lysaker',kvm:200000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
+  {n:'Terminalbygget',by:'Drammen',kvm:24480,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Verkstedhallene',by:'Drammen',kvm:30275,ma:4,yr:null,s:'ingen',src:'',kilde:''}
 ];
 
 const ARE = [
-  {n:'Hausmannsgate 16',by:'Oslo',kvm:9993,ma:4,yr:2004,s:'nå',src:'',kilde:''},
+  {n:'Rosenholm Campus',by:'Oslo',kvm:43400,ma:4,yr:1986,s:'nå',src:'',kilde:''},
+  {n:'Sven Oftedals vei 10',by:'Oslo',kvm:37000,ma:4,yr:1973,s:'nå',src:'',kilde:''},
+  {n:'Hans Møller Gasmanns vei 7',by:'Oslo',kvm:18500,ma:4,yr:2024,s:'ok',src:'',kilde:''},
   {n:'Alf Bjerckes vei 22',by:'Oslo',kvm:29000,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Alf Bjerckes vei 26',by:'Oslo',kvm:28600,ma:4,yr:null,s:'ingen',src:'',kilde:''},
   {n:'Vulkan 7–11',by:'Oslo',kvm:3417,ma:4,yr:2010,s:'nå',src:'',kilde:''},
-  {n:'Rosenholm Campus',by:'Oslo',kvm:43400,ma:4,yr:1986,s:'nå',src:'',kilde:''},
-  {n:'Sven Oftedals vei 10',by:'Oslo',kvm:37000,ma:4,yr:1973,s:'nå',src:'',kilde:''},
-  {n:'Hans Møller Gasmanns vei 7',by:'Oslo',kvm:18500,ma:4,yr:2024,s:'ok',src:'',kilde:''}
+  {n:'Hausmannsgate 16',by:'Oslo',kvm:9993,ma:4,yr:2004,s:'nå',src:'',kilde:''}
 ];
 
 const NORDEA = [
